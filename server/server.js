@@ -2,8 +2,13 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
+var path = require('path');
+var ejs = require('ejs');
 
 var app = module.exports = loopback();
+
+// use EJS to render html pages
+app.set('view engine', 'ejs');
 
 /**
  * Start the web server

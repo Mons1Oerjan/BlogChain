@@ -36,6 +36,13 @@ module.exports = function(app) {
      * Render the Login page
      */
     app.get('/login', function(req, res) {
-        // TODO: render the login page
+        res.render('login');
+    });
+
+    /**
+     * redirect the empty route to the Login page
+     */
+    app.get('', function (req, res) {
+        res.redirect('/login');
     });
 };
