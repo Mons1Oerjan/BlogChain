@@ -1,0 +1,29 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <p>
+        <a class="btn btn-primary" href="/blogs/new">Add a new blog<a>
+    </p>
+</div>
+
+<div class="row">
+    <h1 class = "center-align"> BLOGS</h1>
+    <% blogs.forEach(function(blog){ %>
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-image">
+                <img src= "<%= blog.imageURL %> ">
+                <span class="card-title"><%= blog.name %></span>
+            </div>
+            <div class="card-content overFlow">
+                <p><%= blog.content %></p>
+            </div>
+            <div class="card-action">
+                <a href="/blogs/<%= blog._id %>">Read More</a>
+            </div>
+        </div>
+    </div>
+    <% }); %>
+</div>
+
+<% include ../partials/footer %>
