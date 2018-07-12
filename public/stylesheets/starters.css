@@ -1,0 +1,84 @@
+/**
+*CSS FILE FOR THE INTRO
+*/
+
+/*SET THE BODY TO BLACK (ALL FADED OUT)*/
+body {
+  background-color: #000;
+}
+
+/*MAKE SURE OUR HEADER IS WHITE SINCE IT SHOULD LOOK TRANSPARENT*/
+h1 {
+  font-size: 4em;
+  text-shadow: 4px 4px 15px black;
+  color: #fff;
+}
+
+/*MAKE SURE OUR DIV IS ON TOP OF THE BACKGROUND AND ALWAYS AT 40% FROM THE TOP AND RELATIVE TO THE BROWSER WINDOW*/
+div{
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  padding-top: 40vh;
+}
+/*SLIDE SHOW POSITIONING ref: https://tympanus.net/codrops/2012/01/02/fullscreen-background-image-slideshow-with-css3/
+* SLIDEWHOW IS ALWAYS BEHIND THE DIV (Z-VALUE)
+*/
+.slideshow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*SLIDEWHOW SET OF OL LI... ONE LI PER IMAGE... REF:https://tympanus.net/codrops/2012/01/02/fullscreen-background-image-slideshow-with-css3 */
+.slideshow li {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  animation: imageAnimation 50s linear infinite;
+}
+/*SLIDEWHOW IMAGES AND DELAY SET UP IN SECONDS*/
+.slideshow li:nth-child(1) {
+  background-image: url(https://oroinc.com/b2b-ecommerce/wp-content/uploads/sites/3/2018/04/cryptocurrency-b2b-ecommerce.png);
+}
+.slideshow li:nth-child(2) {
+  background-image: url(https://www.afr.com/content/dam/images/g/v/8/v/0/5/image.related.afrArticleLead.620x350.gx8x8i.png/1503025611440.jpg);
+  animation-delay: 10s;
+}
+.slideshow li:nth-child(3) {
+  background-image: url(https://coiniran.com/wp-content/uploads/2018/05/ethereum-whitepaper-pt2.jpg);
+  animation-delay: 20s;
+}
+.slideshow li:nth-child(4) {
+  background-image: url(https://ethereumworldnews.com/wp-content/uploads/2018/05/Ripple-coin-XRP-Binance.png);
+  animation-delay: 30s;
+}
+/*SLIDEWHOW FADING IN AND OUT ref: https://tympanus.net/codrops/2012/01/02/fullscreen-background-image-slideshow-with-css3/*/
+@keyframes imageAnimation {
+  0% {
+    opacity: 0;
+    animation-timing-function: ease-in;
+  }
+  20% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  40% {
+    opacity: 1
+  }
+  60% {
+    opacity: 0
+  }
+}

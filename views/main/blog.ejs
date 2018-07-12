@@ -1,0 +1,52 @@
+<% include ../partials/header %>
+
+<div class ="row">
+    <h4 class="col s10 offset-s1"><%= blog.name %></h4>
+    <div class= "col s10 offset-s1 textSize">
+        <div class="row">
+            <img class="img-responsive" src="<%= blog.imageURL %>"/>
+        </div>
+        <div class="row">
+            <p><%= blog.content %></p>
+            <p>
+                <em>Submitted by: <%= blog.author.username %>, <%= moment(blog.createdAt).fromNow() %></em>
+            </p>
+        </div>
+        <% if(currentUser && blog.author.id.equals(currentUser._id)){ %>
+            <div class="row">
+                <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="delete-form">
+                    <button class="waves-effect waves-light btn red">Delete Blog</button>
+                </form>
+            </div>
+        <% } %>
+        <% if(currentUser){ %>
+            <form class="delete-form" action="/blogs/<%= blog._id %>/comments/new" method="POST">
+                <div class="row">
+                    <input type="text" name="comment[text]" placeholder="Add your comment">
+                </div>
+                <button class="waves-effect waves-light btn red">Submit</button>
+            </form>
+        <% } %>
+    </div>
+    <div class="row">
+        <% blog.comments.forEach(function(comment){ %>
+            <div class="row col s10 offset-s1 textSize">
+                <strong><%= comment.author.username %></strong>
+                <span><%= moment(comment.createdAt).fromNow() %></span>
+                <div>
+                    <%= comment.text %>
+                    <% if(currentUser && comment.author.id.equals(currentUser._id) ){ %>
+                        <div class="pull-right">
+                            <form class="delete-form" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                <button class="waves-effect waves-light btn red">Delete</a>
+                            </form>
+                        </div>
+                    <% } %>
+                </div>
+                <hr>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<% include ../partials/footer %>

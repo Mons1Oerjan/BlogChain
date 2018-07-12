@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BlogChain</title>
+        <!-- CDN Links to all the references. We are using materializecss and our main css file -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+        <nav>
+            <div class="nav-wrapper grey darken-3">
+                <a href="/blogchainmain" class="brand-logo"><i class="material-icons">trending_up</i>BLOGCHAIN</a>
+                <ul class="right">
+                    <li><a href="/blogs">BLOGS</a></li>
+                    <!--NOTE: currentUser is part of the response body... this can be seen in any of the routers res-->
+                    <% if(!currentUser){ %>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Sign Up</a></li>
+                    <% } else { %>
+                        <li>Signed In As <%= currentUser.username %></li>
+                        <li><a href="/logout">Logout</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </nav>
+        <!--Flash message to display outcome from the user input. This is created by the routes.... we check lenght in case the we get an empty string-->
+        <div class= "container">
+            <% if(error && error.length > 0) { %>
+                <div class="deep-orange lighten-2" id = "flashMessage"><p><%=error %></p></div>
+            <% } %>
+            <% if(success && success.length > 0) { %>
+                <div class="light-green lighten-2" id = "flashMessage"><p><%= success %></p></div>
+            <% } %>
+        </div>

@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+
+<div class="row">
+    <h1 class="col s6 offset-s4">Sign Up</h1>
+    <form class="col s6 offset-s4" action="/register" method="post">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="userName" type="text" class="validate" name="username">
+                <label for="userName">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="password" type="password" class="validate" name="password">
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+            Submit <i class="material-icons right">send</i>
+        </button>
+    </form>
+</div>
+
+<% include ../partials/footer %>
