@@ -33,10 +33,15 @@ router.get("/register", function(req, res) {
  * POST User (create new)
  */
 router.post("/register", function(req, res) {
+    if (req.body.password !== req.body.password_confirm) {
+        req.flash("error", "Passwords did not match. Please try again.");
+        return res.redirect("/register");
+    }
+
     var newUser = new User({
         username: req.body.username
     });
-
+    
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
           req.flash("error", "Could not create a new user.");
