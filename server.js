@@ -11,11 +11,15 @@ var LocalStrategy = require("passport-local");
 var flash = require("connect-flash");
 var session = require("express-session");
 var methodOverride = require("method-override");
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var sslConfigs = require('./sslConfigs');
 
 /**
  * Models
  */
-var Blogs  = require("./models/blogs");
+var Blogs = require("./models/blogs");
 var Comments = require("./models/comments");
 var User = require("./models/user");
 
@@ -37,6 +41,26 @@ mongoose.connect(dbConnectionString, function(err) {
         console.log("Database connected");
     }
 });
+
+/**
+ * SSL Configs
+ */
+var httpsOptions = {
+    key: sslConfigs.privateKey,
+    cert: sslConfigs.certificate
+ };
+
+ console.log(httpsOptions);
+
+ /**
+  * Create HTTP Server
+  */
+ var httpServer = http.createServer(app);
+
+ /**
+  * Create HTTPS Server
+  */
+ var httpsServer = https.createServer(httpsOptions, app);
 
 /**
  * App Configurations
@@ -90,10 +114,17 @@ app.use("/blogs", blogsRouting);
 app.use("/blogs/:id/comments", commentsRouting);
 
 /**
- * Local Connection
+ * Start the HTTP server
  */
-app.listen(8000, function() {
-   console.log("Connection Successful: http://localhost:8000");
+httpServer.listen(3000, function() {
+    console.log('HTTP Server started at http://localhost:3000');
+
+    /**
+     * Start the HTTPS Server
+     */
+    httpsServer.listen(8443, function() {
+        console.log('HTTPS Server started at https://localhost:8443');
+    });
 });
 
 /**
