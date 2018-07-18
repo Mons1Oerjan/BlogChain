@@ -88,7 +88,7 @@ router.get("/logout", function(req, res) {
 /**
  * Dashboard View
  */
-router.get("/blogchainmain", function(re, res) {
+router.get("/blogchainmain", function(req, res) {
     res.render("main/blogchainmain")
 });
 
