@@ -7,7 +7,7 @@ Cryptocurrency forum and arbitrage opportunity application.
 
 ## Application URLs
 - Web-App Local `npm start`: `localhost:8000`
-- Web-App Local with `node .`: localhost:3000`
+- Web-App Local with `node .`: `localhost:3000`
 
 ## Project Dependencies
 Make sure you have installed `node` and `npm`.
