@@ -96,6 +96,7 @@ router.get("/dashboard", function(req, res) {
 });
 
 
+
 router.get("/dashboard/arbitrage", function(req, res) {
     Arbitrage.find({})
         .sort({createdAt: -1})
