@@ -41,7 +41,7 @@ router.post("/register", function(req, res) {
     var newUser = new User({
         username: req.body.username
     });
-    
+
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
           req.flash("error", "Could not create a new user.");
@@ -88,8 +88,15 @@ router.get("/logout", function(req, res) {
 /**
  * Dashboard View
  */
-router.get("/blogchainmain", function(re, res) {
-    res.render("main/blogchainmain")
+router.get("/dashboard", function(req, res) {
+    res.render("main/blogchainmain");
+});
+
+/**
+ * Dashboard View
+ */
+router.get("/dashboard/arbitrage", function(req, res) {
+    res.render("main/arbitrage");
 });
 
 module.exports = router;

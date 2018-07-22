@@ -50,8 +50,6 @@ var httpsOptions = {
     cert: sslConfigs.certificate
  };
 
- console.log(httpsOptions);
-
  /**
   * Create HTTP Server
   */

@@ -14,10 +14,11 @@
     <body>
         <nav>
             <div class="nav-wrapper grey darken-3">
-                <a href="/blogchainmain" class="brand-logo"><i class="material-icons">trending_up</i>BLOGCHAIN</a>
+                <a href="/dashboard" class="brand-logo"><i class="material-icons">trending_up</i>BlogChain</a>
                 <ul class="right">
-                    <li><a href="/blogs">BLOGS</a></li>
-                    <!--NOTE: currentUser is part of the response body... this can be seen in any of the routers res-->
+                    <li><a href="/blogs">Blogs</a></li>
+                    <!--NOTE: currentUser is part of the response body.
+                    This can be seen in any of the routes' res object-->
                     <% if(!currentUser){ %>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Sign Up</a></li>
@@ -25,11 +26,14 @@
                         <li>Signed In As <%= currentUser.username %></li>
                         <li><a href="/logout">Logout</a></li>
                     <% } %>
+                    <li><a href="/dashboard/arbitrage">Arbitrage</a></li>
                 </ul>
             </div>
         </nav>
-        <!--Flash message to display outcome from the user input. This is created by the routes.... we check lenght in case the we get an empty string-->
         <div class= "container">
+            <!--NOTE: Flash message to display outcome from the user input.
+            This is created by the routes. We check lenght in case
+            that we get an empty string-->
             <% if(error && error.length > 0) { %>
                 <div class="deep-orange lighten-2" id = "flashMessage"><p><%=error %></p></div>
             <% } %>
