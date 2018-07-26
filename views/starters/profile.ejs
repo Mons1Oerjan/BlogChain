@@ -1,10 +1,36 @@
 <% include ../partials/header %>
 
-    <div class="row">
-        <h1 class="col s6 offset-s4">Your Profile</h1>
+    <body> 
+        <div class="header">
+            <h2>Your Profile</h2>
+        </div>
+        <div class="row">
+          <div class="leftcolumn">
+            <div class="posts">
+            <h3>Your Blog Posts</h3>
+            <!--List posts here-->
+          </div>
 
-        <p><%= uname %></p>
-
-    </div>
+          <div class="midcolumn">
+            <div class="about">
+              <h3>About Me</h3>
+              <h5>Title description, Dec 7, 2017</h5> 
+              <p>Some text..</p>
+            </div>
+          
+          <div class="rightcolumn">
+            <div class="card">
+              <h2>User Info</h2>
+                <p>Name</p>
+                  <input type="text" name="name">
+                <p>Location:</p>
+                  <input type="text" name="location">
+                <p>Wallet:</p>
+                  <input type="text" name="wallet">
+            </div>
+          </div>
+        </div>
+        <button class="btn danger">Danger: Delete Profile</button>
+    </body>
 
 <% include ../partials/footer %>
