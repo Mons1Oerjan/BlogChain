@@ -1,9 +1,43 @@
 <% include ../partials/header %>
-
 <div class="container">
-    <h1>Arbitrage</h1>
+    <h1>Arbitrages</h1>
+    <form action="/dashboard/arbitrage" method="POST" name="refreshArb">
+        <a href="#" class="waves-effect waves-light btn" onclick="document.refreshArb.submit();">
+            <i class="material-icons left">trending_up</i>
+            Refresh Arbitrages
+        </a>
+    </form>
+    <table id="arbitrageTable">
+        <thead>
+          <tr>
+              <th>Pair</th>
+              <th>Arbitrage ($)</th>
+              <th>Bid Exchange</th>
+              <th>Ask Exchange</th>
+              <th>Bid Price</th>
+              <th>Ask Price</th>
+              <th>Bid Liquidity</th>
+              <th>Ask Liquidity</th>
+              <th>Date/Time</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% arbitrages.forEach(function(arbitrage){ %>
+                <tr>
+                    <td><%= arbitrage.orderBookBid.pair %></td>
+                    <td><%= arbitrage.arbitrageOpportunity %></td>
+                    <td><%= arbitrage.orderBookBid.exchange %></td>
+                    <td><%= arbitrage.orderBookAsk.exchange %></td>
+                    <td><%= arbitrage.orderBookBid.bidPrice %></td>
+                    <td><%= arbitrage.orderBookAsk.askPrice %></td>
+                    <td><%= arbitrage.orderBookBid.bidLiquidity %></td>
+                    <td><%= arbitrage.orderBookAsk.askLiquidity %></td>
+                    <td><%= arbitrage.createdAt %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+      </table>
+  </div>
 
-</div>
-
-
+<% include ../partials/datatables %>
 <% include ../partials/footer %>

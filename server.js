@@ -22,6 +22,7 @@ var sslConfigs = require('./sslConfigs');
 var Blogs = require("./models/blogs");
 var Comments = require("./models/comments");
 var User = require("./models/user");
+var Arbitrage = require('./models/arbitrages');
 
 /**
  * Routes
