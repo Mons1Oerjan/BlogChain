@@ -115,15 +115,14 @@ router.get("/dashboard/arbitrage", function(req, res) {
  * Find Arbitrages in the market.
  */
 router.post("/dashboard/arbitrage", function(req, res) {
-    GetArbitrages(function(arbitrages) {
-        res.redirect("/dashboard/arbitrage");
-    });
+    GetArbitrages();
+    res.redirect('/dashboard/arbitrage')
 });
 
 /**
  * Gets the arbitrages by comparing exchanges and pairs.
  */
-var GetArbitrages = function(callback) {
+var GetArbitrages = function() {
     var cryptowatchBaseUrl = "https://api.cryptowat.ch";
     var orderbookRoute = cryptowatchBaseUrl + "/markets/{e}/{p}/orderbook";
 
@@ -220,33 +219,45 @@ var GetArbitrages = function(callback) {
 
                                getOrderBookByExchangeAndPair(exchange, currPair, route2, function(ex, pa, orderBook2) {
                                    if (orderBook2 && !orderBook2.error) {
-                                       // compare OrderBooks (find arbitrages)
-                                       var diff1 = orderBook1.bidPrice - orderBook2.askPrice;
-                                       var diff2 = orderBook2.bidPrice - orderBook1.askPrice;
+                                       // calculate spread values
+                                       var spread1 = orderBook1.bidPrice - orderBook2.askPrice;
+                                       var spread2 = orderBook2.bidPrice - orderBook1.askPrice;
 
-                                       if (diff1 > 0) {
-                                           var arbitrage = {
+                                       if (spread1 > 0) {
+                                           // calculate spread percentage
+                                           var pct1 = (spread1 / orderBook1.bidPrice) * 100;
+
+                                           // calculate the arbitrage opportunity
+                                           var opportunity1 = pct1 * Math.min(orderBook1.bidLiquidity, orderBook2.askLiquidity);
+
+                                           var arbitrage1 = {
+                                               pair: pa,
+                                               spread: spread1,
+                                               spreadPct: pct1,
+                                               arbitrageOpportunity: opportunity1,
                                                orderBookBid: orderBook1,
-                                               orderBookAsk: orderBook2,
-                                               diff: diff1
+                                               orderBookAsk: orderBook2
                                            };
 
-                                           console.log('Success! Arbitrage found.');
-                                           console.log(arbitrage);
-
-                                           writeArbitrageToDatabase(arbitrage);
+                                           writeArbitrageToDatabase(arbitrage1);
                                        }
-                                       if (diff2 > 0) {
-                                           var arbitrage = {
+                                       if (spread2 > 0) {
+                                           // calculate spread percentage
+                                           var pct2 = (spread2 / orderBook2.bidPrice) * 100;
+
+                                           // calculate the arbitrage opportunity
+                                           var opportunity2 = pct2 * Math.min(orderBook2.bidLiquidity, orderBook1.askLiquidity);
+
+                                           var arbitrage2 = {
+                                               pair: pa,
+                                               spread: spread2,
+                                               spreadPct: pct2,
+                                               arbitrageOpportunity: opportunity2,
                                                orderBookBid: orderBook2,
-                                               orderBookAsk: orderBook1,
-                                               diff: diff2
+                                               orderBookAsk: orderBook1
                                            };
 
-                                           console.log('Success! Arbitrage found.');
-                                           console.log(arbitrage);
-
-                                           writeArbitrageToDatabase(arbitrage);
+                                           writeArbitrageToDatabase(arbitrage2);
                                        }
                                    }
                                });
@@ -260,37 +271,42 @@ var GetArbitrages = function(callback) {
 
     request.get(cryptowatchBaseUrl + "/markets", function(error, response, body) {
         if (error) {
-            console.log(error)
-            return res.render("main/blogchainmain");
+            console.log(error);
+            return;
         }
-        if (!response || response.statusCode !== 200) {
-            console.log("Error: Markets status code is not 200.");
-            return res.render("main/blogchainmain");
+        else if (!response) {
+            console.log('Error: No response from the CryptoWatch API.');
+            return;
         }
-
-        var jsonBody = JSON.parse(body);
-
-        // Build a hashmap of exchanges and their supported pairs
-        var exchangesMap = {};
-        jsonBody.result.forEach(function(result) {
-            if (result.active) {
-                var exchange = result.exchange;
-                var pair = result.pair;
-
-                if (!(exchange in exchangesMap)) {
-                    // add new exchange to the map
-                    exchangesMap[exchange] = {
-                        pairs: []
-                    };
-                }
-                exchangesMap[exchange].pairs.push(pair);
+        else if (response.statusCode !== 200) {
+            console.log("Error: Markets status code is: " + response.statusCode);
+            if (response.statusCode === 429) {
+                console.log('You have reached the CryptoWatch API Rate Limit of 8 seconds CPU time on their server.');
             }
-        });
+            return;
+        }
+        else {
+            var jsonBody = JSON.parse(body);
 
-        // var fs = require('fs');
-        // fs.writeFile('ExchangesMap.json', JSON.stringify(exchangesMap), 'utf-8');
+            // Build a hashmap of exchanges and their supported pairs
+            var exchangesMap = {};
+            jsonBody.result.forEach(function(result) {
+                if (result.active) {
+                    var exchange = result.exchange;
+                    var pair = result.pair;
 
-        findArbitrages(exchangesMap);
+                    if (!(exchange in exchangesMap)) {
+                        // add new exchange to the map
+                        exchangesMap[exchange] = {
+                            pairs: []
+                        };
+                    }
+                    exchangesMap[exchange].pairs.push(pair);
+                }
+            });
+
+            findArbitrages(exchangesMap);
+        }
     });
 }
 
