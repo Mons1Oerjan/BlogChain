@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+  
+<div class="row">
+    <h1 class="col s6 offset-s4">Change your Username</h1>
+    <form class="col s6 offset-s4" action="/<%=currentUser.username%>/update/?_method=PUT" method="post">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="new_username" type="text" class="validate" name="new_username" placeholder="Please enter your new username here...">
+                <label for="userName">Username</label>
+            </div>
+        </div>
+        <!-- validate later
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="password" type="password" class="validate" name="password" placeholder="Please enter a password...">
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="password_confirm" type="password" class="validate" name="password_confirm" placeholder="Please confirm your password...">
+                <label for="password_confirm">Password Confirmation</label>
+            </div>
+        </div> -->
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+            Submit <i class="material-icons right">send</i>
+        </button>
+    </form>
+</div>
+
+<% include ../partials/footer %>
+

@@ -95,8 +95,6 @@ router.get("/dashboard", function(req, res) {
     res.render("main/blogchainmain");
 });
 
-
-
 router.get("/dashboard/arbitrage", function(req, res) {
     Arbitrage.find({})
         .sort({createdAt: -1})
@@ -115,6 +113,5 @@ router.get("/dashboard/arbitrage", function(req, res) {
             }
         });
 });
-
 
 module.exports = router;

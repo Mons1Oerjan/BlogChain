@@ -30,6 +30,7 @@ var Arbitrage = require('./models/arbitrages');
 var commentsRouting = require("./routes/comments");
 var blogsRouting = require("./routes/blogs");
 var indexRouting = require("./routes/index");
+var profileRouting = require("./routes/profile");
 
 /**
  * Methods
@@ -125,6 +126,7 @@ app.use(function(req, res, next) {
 app.use("/", indexRouting);
 app.use("/blogs", blogsRouting);
 app.use("/blogs/:id/comments", commentsRouting);
+app.use("/:username", profileRouting);
 
 var runServer = function(env) {
     // if (env && env === 'production') {

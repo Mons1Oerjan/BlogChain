@@ -5,11 +5,10 @@
             <h2>Your Profile</h2>
         </div>
         <div class="row">
-          <div class="leftcolumn">
+          <!--<div class="leftcolumn">
             <div class="posts">
             <h3>Your Blog Posts</h3>
-            <!--List posts here-->
-          </div>
+          </div>-->
 
           <div class="midcolumn">
             <div class="about">
@@ -30,7 +29,17 @@
             </div>
           </div>
         </div>
-        <button class="btn danger">Danger: Delete Profile</button>
+        <% if(currentUser){ %>
+            <div class="row">
+                <form action="/<%=currentUser.username%>/profile/?_method=DELETE" method="POST" class="delete-form">
+                    <button class="waves-effect waves-light btn red">Danger: Delete Profile</button>
+                </form>
+            </div>
+            <div class="row">
+                <form action="/<%=currentUser.username%>/update" method="GET" class="update-form">
+                    <button class="waves-effect waves-light btn yellow">Update Username</button>
+                </form>
+        <% } %>
     </body>
 
 <% include ../partials/footer %>
