@@ -11,7 +11,9 @@
         <thead>
           <tr>
               <th>Pair</th>
-              <th>Arbitrage ($)</th>
+              <th>Arbitrage</th>
+              <th>Spread</th>
+              <th>Spread %</th>
               <th>Bid Exchange</th>
               <th>Ask Exchange</th>
               <th>Bid Price</th>
@@ -24,8 +26,10 @@
         <tbody>
             <% arbitrages.forEach(function(arbitrage){ %>
                 <tr>
-                    <td><%= arbitrage.orderBookBid.pair %></td>
+                    <td><%= arbitrage.pair %></td>
                     <td><%= arbitrage.arbitrageOpportunity %></td>
+                    <td><%= arbitrage.spread %></td>
+                    <td><%= arbitrage.spreadPct %></td>
                     <td><%= arbitrage.orderBookBid.exchange %></td>
                     <td><%= arbitrage.orderBookAsk.exchange %></td>
                     <td><%= arbitrage.orderBookBid.bidPrice %></td>
@@ -39,5 +43,5 @@
       </table>
   </div>
 
-<% include ../partials/datatables %>
+<% include ../partials/jquery %>
 <% include ../partials/footer %>
