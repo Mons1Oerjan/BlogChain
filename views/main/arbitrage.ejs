@@ -1,12 +1,10 @@
 <% include ../partials/header %>
 <div class="container">
     <h1>Arbitrages</h1>
-    <form action="/dashboard/arbitrage" method="POST" name="refreshArb">
-        <a href="#" class="waves-effect waves-light btn" onclick="document.refreshArb.submit();">
-            <i class="material-icons left">trending_up</i>
-            Refresh Arbitrages
-        </a>
-    </form>
+    <a href="/dashboard/arbitrage" class="waves-effect waves-light btn">
+        <i class="material-icons left">trending_up</i>
+        Refresh Arbitrages
+    </a>
     <table id="arbitrageTable" class="row-border">
         <thead>
           <tr>

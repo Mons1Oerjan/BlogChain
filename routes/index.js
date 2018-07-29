@@ -15,7 +15,6 @@ var request = require('request');
 
 var User = require("../models/user");
 var Arbitrage = require('../models/arbitrages');
-var arbitrageCrawler = require('../methods/arbitrageCrawler');
 
 /**
  * Welcome View
@@ -114,15 +113,6 @@ router.get("/dashboard/arbitrage", function(req, res) {
             }
         });
 });
-
-/**
- * Find Arbitrages in the market.
- */
-router.post("/dashboard/arbitrage", function(req, res) {
-    arbitrageCrawler.getArbitrages();
-    res.redirect('/dashboard/arbitrage')
-});
-
 
 
 module.exports = router;
