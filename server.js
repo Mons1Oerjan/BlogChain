@@ -32,6 +32,11 @@ var blogsRouting = require("./routes/blogs");
 var indexRouting = require("./routes/index");
 
 /**
+ * Methods
+ */
+var arbitrageCrawler = require('./methods/arbitrageCrawler');
+
+/**
  * DB Connection
  */
 var dbConnectionString = 'mongodb://test:cloudtest1@ds163630.mlab.com:63630/cloud_a2';
@@ -60,6 +65,8 @@ var httpsOptions = {
   * Create HTTPS Server
   */
  var httpsServer = https.createServer(httpsOptions, app);
+
+ var everyHour = 60 * 60 * 1000;
 
 /**
  * App Configurations
@@ -125,6 +132,15 @@ httpServer.listen(3000, function() {
         console.log('HTTPS Server started at https://localhost:8443');
     });
 });
+
+/**
+ * Fetch arbitrages once every hour
+ */
+setInterval(function() {
+    console.log("Start fetching arbitrages.");
+    arbitrageCrawler.getArbitrages();
+}, everyHour);
+
 
 /**
  * TODO: Dynamic connection, once deployed.
