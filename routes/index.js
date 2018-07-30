@@ -146,6 +146,7 @@ var getPrices = function(callback) {
             }
 
             if (response.statusCode && response.statusCode !== 200) {
+                console.log(route);
                 console.log('Summary GET request status code: ' + response.statusCode);
                 return callback(exchange, pair, {
                     error: 'Summary status code is not 200.'
@@ -207,7 +208,7 @@ var getExchangePairList = function() {
         ['ethusd','quadriga'],
         ['ethusd','bitbay'],
         ['ltcusd','gdax'],
-        ['ltcusd','quadriga'],
+        ['ltcusd','bitfinex'],
         ['ltcusd','bitbay']
 
     ];

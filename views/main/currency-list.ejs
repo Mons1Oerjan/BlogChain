@@ -15,6 +15,15 @@
             <i class="material-icons left">trending_up</i>
             Refresh Prices
         </a>
+
+        <% prices.forEach(function(price){ %>
+        	<%= price.pair %>
+            <%= price.exchange %>
+            <%= price.last %>
+            <%= price.highest %>
+            <%= price.lowest %>
+            <%= price.volume %>
+        <% }); %>
     </form>
 </div>
 
