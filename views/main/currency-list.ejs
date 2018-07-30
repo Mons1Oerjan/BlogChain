@@ -9,6 +9,17 @@
 -->
 
 <div class="container">
+	<h1>Currencies</h1>
+    <form action="/dashboard" method="POST" name="refreshPrices">
+		<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
+            <i class="material-icons left">trending_up</i>
+            Refresh Prices
+        </a>
+    </form>
+</div>
+
+<-- Probably not needed -->
+<div class="container">
 
 	<b>Exchange:</b> <input id="last" type="text" value="gdax" readonly> <br>
   	<b>Pair:</b> <input id="last" type="text" value="btcusd" readonly> <br>

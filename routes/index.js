@@ -13,6 +13,7 @@ var router  = express.Router();
 var passport = require("passport");
 var request = require('request');
 
+
 var User = require("../models/user");
 var Arbitrage = require('../models/arbitrages');
 
@@ -92,7 +93,8 @@ router.get("/logout", function(req, res) {
  * Dashboard View
  */
 router.get("/dashboard", function(req, res) {
-    res.render("main/blogchainmain");
+  res.render("main/blogchainmain"); //where to put this?
+
 });
 
 router.get("/dashboard/arbitrage", function(req, res) {
@@ -113,6 +115,43 @@ router.get("/dashboard/arbitrage", function(req, res) {
             }
         });
 });
+
+
+/**
+ * Get the prices for each cryptocurrency
+ */ 
+var getPrices = function(callback) {
+    var summaryURL = "https://api.cryptowat.ch/markets/{exchange}/{pair}/summary"; //baseURL for price-related API requests
+
+    /**
+    * Gets the summary given a market exchange, a pair, and the route.
+    */
+    var getSummary = function(exchange, pair, route, callback) {
+        request.get(route, function(error, response, body) {
+            if (error) {
+                console.log('summary GET failed for: ' + route);
+                return callback(exchange, pair, {
+                    error: 'Summary GET request failed'
+                });
+            }
+
+            if (!response) { //response missing
+                console.log('Summary GET Request: Missing response');
+            } else if (!body) { //body missing
+                console.log('Summary GET Request: Missing body');
+            }
+
+            if (response.statusCode && response.statusCode !== 200) {
+                console.log('Summary GET request status code: ' + response.statusCode);
+                return callback(exchange, pair {
+                    error: 'Summary status code is not 200';
+                });
+            }
+        });
+    }
+
+
+}
 
 
 module.exports = router;
