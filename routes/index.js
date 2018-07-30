@@ -93,7 +93,10 @@ router.get("/logout", function(req, res) {
  * Dashboard View
  */
 router.get("/dashboard", function(req, res) {
-  res.render("main/blogchainmain"); //where to put this?
+    
+    getPrices(function(prices) {
+        res.render("main/blogchainmain"); //is this right?
+    });
 
 });
 
@@ -129,7 +132,7 @@ var getPrices = function(callback) {
     var getSummary = function(exchange, pair, route, callback) {
         request.get(route, function(error, response, body) {
             if (error) {
-                console.log('summary GET failed for: ' + route);
+                console.log('Summary GET failed for: ' + route);
                 return callback(exchange, pair, {
                     error: 'Summary GET request failed'
                 });
@@ -143,8 +146,8 @@ var getPrices = function(callback) {
 
             if (response.statusCode && response.statusCode !== 200) {
                 console.log('Summary GET request status code: ' + response.statusCode);
-                return callback(exchange, pair {
-                    error: 'Summary status code is not 200';
+                return callback(exchange, pair, {
+                    error: 'Summary status code is not 200.'
                 });
             }
 
@@ -165,8 +168,8 @@ var getPrices = function(callback) {
             }
 
             return callback(exchange, pair, { //return desired information
-                pair: pair,
                 exchange: exchange,
+                pair: pair,
                 last: parseFloat(jsonBody.result.price.last),
                 highest: parseFloat(jsonBody.result.price.high),
                 lowest: parseFloat(jsonBody.result.price.low),
@@ -176,6 +179,11 @@ var getPrices = function(callback) {
         });
     };
 
+
+    var testExchange = 'gdax';
+    var testPair = 'btcusd';
+    var testRoute = summaryURL.replace('{exchange}', testExchange).replace('{pair}', testPair);
+    getSummary(testExchange, testPair, testRoute, callback);
 
 }
 
