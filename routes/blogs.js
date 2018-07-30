@@ -69,27 +69,70 @@ router.post("/", isUserLoggedIn, filesMiddleware.single('image'),function(req, r
             req.flash('error', err.message); // flash message
             return res.redirect('blogs/');
         } else {
-            if (req.file) {
-                // upload image to cloudinary if the user selected an image file
-                cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
-                    if (error) {
-                        req.flash('error', "Your selected image could not be uploaded.");
-                        console.error(error);
-                        return res.redirect("/blogs");
-                    }
-
-                    req.flash('success', 'Blog Created!');
-                    res.redirect("/blogs");
-                });
+            if (!req.file) {
+              // needs to update the image...
+              req.flash('success', 'Blog Created!');
+              res.redirect("/blogs");
             } else {
-                // no image file selected
-                req.flash('success', 'Blog Created!');
-                res.redirect("/blogs");
+              // upload image to cloudinary if the user selected an image file
+              cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
+                  if (error) {
+                      req.flash('error', "Your selected image could not be uploaded.");
+                      console.error(error);
+                      return res.redirect("/blogs");
+                  }
+                  blogCreated.imageID= result.public_id;
+                  blogCreated.imageURL= result.url;
+                  blogCreated.save(function(err){
+                    if(err){
+                      req.flash('error', "Your selected image could not be uploaded.");
+                      console.error(error);
+                      return res.redirect("/blogs");
+                    }else{
+                      req.flash('success', 'Blog Created!');
+                      res.redirect("/blogs");
+                    }
+                  });
+              });
             }
         }
     });
  });
-
+ /**
+ *Update Blog => redirects to the view.
+ */
+ router.get("/:id/edit", isUserLoggedIn, checkAuthorBlog, function(req, res){
+   Blog.findById(req.params.id, function(err, foundBlog) {
+       if (err || !foundBlog) {
+           console.log(err);
+           req.flash('error', 'Sorry, that Blog does not exist!');
+           return res.redirect('/blogs');
+       }
+       return res.render("main/blogEdit", {
+           blog: foundBlog
+       });
+   });
+ });
+ /**
+ *Update Blog = > Updates the db.
+ */
+ router.put("/:id", isUserLoggedIn, checkAuthorBlog, function(req, res){
+   var updatedBlog = {
+     $set: {
+       name: req.body.blog.name,
+       content: req.body.blog.content
+     }
+   };
+   Blog.findByIdAndUpdate(req.params.id, updatedBlog, function(err, updated){
+     if(err||!updated){
+       console.log(err);
+       req.flash('error', 'Sorry, that Blog does not exist!');
+       return res.redirect('/blogs');
+     }
+     req.flash('success', 'Your blog has been updated!');
+     return res.redirect("/blogs/" + req.params.id);
+   });
+ });
 /**
  * Delete Blog by ID
  */

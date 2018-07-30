@@ -1,0 +1,18 @@
+<% include ../partials/header %>
+  <div>
+    <br>
+    <br>
+    <div align="center" style="width:80%; margin: auto;">
+      <form style="width:100%;" action="/blogs/<%= blog._id %>?_method=PUT" method="POST" style="margin: 0 auto;">
+        <div style="width:50%;">
+          <textarea style="width:100%;" id="textarea1" class="materialize-textarea" name="blog[name]" minlength="2" maxlength="50" required><%= blog.name %></textarea>
+          <label for="textarea1">Title</label>
+        </div>
+        <textarea style="width:100%;" id="textarea2" class="materialize-textarea" name="blog[content]" minlength="20" maxlength="1000" required><%= blog.content %></textarea>
+        <label for="textarea2">Content</label>
+        <br>
+        <button class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+<% include ../partials/footer %>

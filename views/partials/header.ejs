@@ -17,8 +17,10 @@
         <nav>
             <div class="nav-wrapper grey darken-3">
                 <a href="/dashboard" class="brand-logo"><i class="material-icons">trending_up</i>BlogChain</a>
-                <ul class="right">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
                     <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="/dashboard/arbitrage">Arbitrage</a></li>
                     <!--NOTE: currentUser is part of the response body.
                     This can be seen in any of the routes' res object-->
                     <% if(!currentUser){ %>
@@ -28,10 +30,28 @@
                         <li>Signed In As <%= currentUser.username %></li>
                         <li><a href="/logout">Logout</a></li>
                     <% } %>
-                    <li><a href="/dashboard/arbitrage">Arbitrage</a></li>
                 </ul>
             </div>
         </nav>
+
+        <!-- MAKES THE MENU COLLAPS... -->
+        <ul class="sidenav" id="mobile-demo">
+          <li><a href="/blogs">Blogs</a></li>
+          <li><a href="/dashboard/arbitrage">Arbitrage</a></li>
+          <% if(!currentUser){ %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Sign Up</a></li>
+          <% } else { %>
+          <li><a href="/logout">Logout</a></li>
+          <% } %>
+        </ul>
+
+        <!--JavaScript file for the menu-->
+        <script type="text/javascript">
+          var elems = document.querySelectorAll('.sidenav');
+          var instances = M.Sidenav.init(elems, 'left');
+        </script>
+
         <div class= "container">
             <!--NOTE: Flash message to display outcome from the user input.
             This is created by the routes. We check lenght in case

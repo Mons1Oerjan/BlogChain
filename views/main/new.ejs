@@ -1,31 +1,33 @@
 <% include ../partials/header %>
 
-<div class="row">
+<div style="margin-bottom:100px;">
+  <br>
+  <br>
+  <div align="center" style="width:80%; margin: auto;">
     <h1 style="text-align: center">Create a BlogChain blog</h1>
-    <div style="width: 30%; margin: 25px auto;">
-        <form action="/blogs" method="POST" enctype="multipart/form-data">
-            <div class="input-field col s6">
-                <input id="name" type="text" class="validate" name = "name">
-                <label for="name">Title</label>
-            </div>
-            <div class="input-field col s12">
-                <textarea id="description" type="text" class="validate materialize-textarea" name = "description"></textarea>
-                <label for="description">Write here...</label>
-            </div>
-            <div class ="input-field col s12">
-                <label>Image</label>
-                <input type = "file" name="image" accept="image/png, image/jpeg, image/jpg, image/gif" placeholder = "Select Image">
-            </div>
-            <div class="input-field col s3">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-        </form>
-    </div>
+    <form style="width:100%;" action="/blogs" method="POST" enctype="multipart/form-data" style="margin: 0 auto;">
+      <div style="width:50%;">
+        <textarea style="width:100%;" id="textarea1" class="materialize-textarea" name="name" minlength="2" maxlength="50" required></textarea>
+        <label for="textarea1">Title</label>
+      </div>
+      <textarea style="width:100%;" id="textarea2" class="materialize-textarea" name="description" minlength="20" maxlength="1000" required></textarea>
+      <label for="textarea2">Content</label>
+      <div style="width:30%; margin: auto;" class="file-field input-field">
+        <div class="btn">
+          <span>File</span>
+          <input type="file" name="image" accept="image/png, image/jpeg, image/jpg, image/gif">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" placeholder="Upload your image">
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary">Submit <i class="material-icons right">send</i> </button>
+    </form>
+    <br>
     <div>
         <a href="/blogs">Go Back</a>
     </div>
+  </div>
 </div>
-
 <% include ../partials/footer %>

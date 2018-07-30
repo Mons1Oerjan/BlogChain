@@ -1,52 +1,91 @@
 <% include ../partials/header %>
-
-<div class ="row">
-    <h4 class="col s10 offset-s1"><%= blog.name %></h4>
-    <div class= "col s10 offset-s1 textSize">
-        <div class="row">
-            <img class="img-responsive" src="<%= blog.imageURL %>"/>
-        </div>
-        <div class="row">
-            <p><%= blog.content %></p>
-            <p>
-                <em>Submitted by: <%= blog.author.username %>, <%= moment(blog.createdAt).fromNow() %></em>
-            </p>
-        </div>
-        <% if(currentUser && blog.author.id.equals(currentUser._id)){ %>
-            <div class="row">
-                <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="delete-form">
-                    <button class="waves-effect waves-light btn red">Delete Blog</button>
-                </form>
-            </div>
-        <% } %>
-        <% if(currentUser){ %>
-            <form class="delete-form" action="/blogs/<%= blog._id %>/comments/new" method="POST">
-                <div class="row">
-                    <input type="text" name="comment[text]" placeholder="Add your comment">
-                </div>
-                <button class="waves-effect waves-light btn red">Submit</button>
-            </form>
-        <% } %>
+<div style="color: black; margin-bottom:100px;">
+  <div align="center" style="width:80%; margin: auto;">
+    <h4><%= blog.name %></h4>
+    <br>
+    <img class="img-responsive" src="<%= blog.imageURL %>"/>
+    <br>
+    <p style="font-size: 1.3em;" align="left"><%= blog.content %></p>
+    <p style="font-size: 1em;"><em>Submitted by: <%= blog.author.username %>, <%= moment(blog.createdAt).fromNow() %></em></p>
+    <% if(currentUser && blog.author.id.equals(currentUser._id)){ %>
+      <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="delete-form">
+          <button class="waves-effect waves-light btn red">Delete Blog</button>
+      </form>
+      <a class="btn btn-primary waves-effect waves-light" href="/blogs/<%= blog._id %>/edit">Edit Blog</a>
+    <% } %>
+    <br>
+    <div align="center">
+      <% if(currentUser){ %>
+        <form style="width: 80%;" action="/blogs/<%= blog._id %>/comments/new" method="POST">
+                <textarea style="width: 100%; font-size: 1.3em;" id="commentArea" class="materialize-textarea" name="comment[text]" maxlength="100" minlength="2" required> </textarea>
+                <label for="commentArea">Add your comment</label>
+                <br>
+                <button style="margin: 5px;" class="btn btn-primary waves-effect waves-light">Submit</button>
+        </form>
+      <% } %>
+      <br>
     </div>
-    <div class="row">
-        <% blog.comments.forEach(function(comment){ %>
-            <div class="row col s10 offset-s1 textSize">
-                <strong><%= comment.author.username %></strong>
-                <span><%= moment(comment.createdAt).fromNow() %></span>
-                <div>
-                    <%= comment.text %>
-                    <% if(currentUser && comment.author.id.equals(currentUser._id) ){ %>
-                        <div class="pull-right">
-                            <form class="delete-form" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                <button class="waves-effect waves-light btn red">Delete</a>
-                            </form>
-                        </div>
-                    <% } %>
-                </div>
-                <hr>
-            </div>
-        <% }) %>
+    <br>
+    <br>
+    <h5>Comments</h5>
+    <div align="left">
+      <% blog.comments.forEach(function(comment){ %>
+        <br>
+        <form style="width: 100%;" id="<%= comment._id %>" onsubmit="return check()" action="#" method="POST">
+          <textarea style="width: 100%; font-size: 1.3em;" id="<%= comment._id %>text" name="comment[text]" class="materialize-textarea" maxlength="100" minlength="2" required readonly><%= comment.text %></textarea>
+          <div style="font-size: 0.8em;">
+            <strong><%= comment.author.username %></strong>
+            <span><%= moment(comment.createdAt).fromNow() %></span>
+          </div>
+          <% if(currentUser && comment.author.id.equals(currentUser._id) ){ %>
+                <button style="margin: 10px 5px 10px 0px;" class="waves-effect waves-light btn red" onclick="deleteComment('<%= blog._id %>' , '<%= comment._id %>');">Delete</button>
+                <button style="margin: 10px 5px 10px 5px;" id = "<%= comment._id%>btn" class="btn btn-primary waves-effect waves-light" onclick="editComment('<%= blog._id %>' , '<%= comment._id %>');">Edit</button>
+          <% } %>
+        </form>
+      <% }) %>
     </div>
-</div>
+  </div>
+<!-- Scripts for edit and delete comments -->
+<script type="text/javascript">
 
+  function check(){
+    var element = document.activeElement;
+    var textProp = element.textContent.replace(/\s/g,'')
+    if(textProp.localeCompare('Save')===0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  function deleteComment(blogID, commentID)
+  {
+    var currentForm = document.getElementById(commentID);
+    currentForm.action = "/blogs/"+blogID+"/comments/"+commentID+"?_method=DELETE";
+  }
+
+  function editComment(blogID, commentID)
+  {
+
+    var elementId = commentID+"btn";
+    var element = document.getElementById(elementId);
+    var textProp = element.textContent.replace(/\s/g,'')
+
+    var elementTextid = commentID+"text";
+    var elementText = document.getElementById(elementTextid);
+    var text = elementText.value;
+
+    if(textProp.localeCompare('Edit')===0){
+      element.textContent='Save';
+      elementText.readOnly = false;
+    }
+    else{
+      element.textContent='Edit';
+      elementText.readOnly = true;
+      var currentForm = document.getElementById(commentID);
+      currentForm.action = "/blogs/"+blogID+"/comments/"+commentID+"?_method=PUT";
+    }
+    elementText.value = text;
+  }
+</script>
 <% include ../partials/footer %>
