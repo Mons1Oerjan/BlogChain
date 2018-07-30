@@ -22,6 +22,9 @@ var blogSchema = new mongoose.Schema({
          ref: "Comments"
       }
    ]
+ },
+ {
+   usePushEach: true
 });
 
 module.exports = mongoose.model("Blogs", blogSchema);

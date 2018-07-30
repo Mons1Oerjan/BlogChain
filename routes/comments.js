@@ -27,13 +27,40 @@ router.post("/new", isUserLoggedIn, function(req, res) {
             comment.author.username = req.user.username;
             comment.save();
             blog.comments.push(comment);
-            blog.save();
-            req.flash('success', 'Created a comment!');
-            res.redirect('/blogs/' + blog._id);
+            blog.save(function(err){
+              if(err){
+                req.flash('error', 'Sorry, the comment could not be created.');
+                console.log(err);
+                res.redirect('/blogs/' + blog._id);
+              }
+              else{
+                req.flash('success', 'Created a comment!');
+                res.redirect('/blogs/' + blog._id);
+              }
+            });
         });
     });
 });
-
+/**
+*Update comment
+*/
+router.put("/:commentId", isUserLoggedIn, checkAuthorComment, function(req, res) {
+    var updateComment = {
+      $set: {
+        text: req.body.comment.text
+      }
+    };
+    Comments.findByIdAndUpdate(req.params.commentId, updateComment, function(err, updated){
+      if(err){
+            req.flash('error', err.message);
+            res.redirect("/blogs/" + req.params.id);
+      }else{
+            console.log(updated);
+            req.flash('success', 'Comment updated');
+            res.redirect("/blogs/" + req.params.id);
+      }
+    });
+});
 /**
  * Delete Comment by ID
  */
@@ -56,8 +83,6 @@ router.delete("/:commentId", isUserLoggedIn, checkAuthorComment, function(req, r
                 req.flash('error', err.message);
                 return res.redirect('/');
             }
-
-            console.log("deleting...");
             req.flash('error', 'Comment deleted!');
             res.redirect("/blogs/" + req.params.id);
         });
