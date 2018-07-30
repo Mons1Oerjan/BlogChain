@@ -147,8 +147,34 @@ var getPrices = function(callback) {
                     error: 'Summary status code is not 200';
                 });
             }
+
+            jsonBody = JSON.parse(body);
+
+            if (!jsonBody.result) { //no results returned
+                return callback(exchange, pair, {
+                    error: 'Summary contains no results.'
+                });
+            } else if (!jsonBody.result.price) { //no prices listed in summary
+                return callback(exchange, pair, {
+                    error: 'Summary contains no prices.'
+                });
+            } else if (!jsonBody.result.volume) { //no volume for the exchange + pair listed
+                return callback(exchange, pair, {
+                    error: 'Summary does not indicate a volume.'
+                });
+            }
+
+            return callback(exchange, pair, { //return desired information
+                pair: pair,
+                exchange: exchange,
+                last: parseFloat(jsonBody.result.price.last),
+                highest: parseFloat(jsonBody.result.price.high),
+                lowest: parseFloat(jsonBody.result.price.low),
+                volume: parseFloat(jsonBody.result.volume)
+            });
+
         });
-    }
+    };
 
 
 }
