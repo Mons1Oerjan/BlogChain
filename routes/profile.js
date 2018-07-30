@@ -8,6 +8,8 @@
 var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
+var middleware = require("../middleware/index");
+var { isUserLoggedIn } = middleware;
 
 var User = require("../models/user");
 
@@ -57,30 +59,21 @@ router.get("/:username/update", function(req, res) {
 /**
  * Process Update Username
  */
-router.put("/:username/update", function(req, res) {
-    var userToUpdate = { username: req.params.username };
-    User.find(userToUpdate, function(err, userFound) {
-        if(err) {
-            console.log("find in username/update: " + err);
-            req.flash("Error finding user!");
+router.put("/:username/update", isUserLoggedIn, function(req, res) {
+    //var userToUpdate = { _id: req.user.id };
+    console.log(req.user._id);
+    console.log(req.body.new_username);
+    User.findByIdAndUpdate(req.user._id, {$set: {username: req.body.new_username}, 
+        function(err, result) {
+            if(err) {
+                console.log("find in username/update: " + err);
+                req.flash("Error finding user!");
+                return res.redirect("/");
+            }
+            console.log(result);
             return res.redirect("/");
-        }
-        uname = userFound[0].username;
-        User.update({username: uname}, {
-            username: req.params.new_username
-            }, function(err) {
-                    if(err) {
-                        console.log("processing username/update: " + err);
-                        req.flash("Could not update username!");
-                        return res.redirect("/");
-                    }
-                    req.logout();
-                    req.flash("Your username has been changed!");
-                    return res.redirect("/");
-                }
-         );            
-    });
+        }}
+    );
 });
-
 
 module.exports = router;

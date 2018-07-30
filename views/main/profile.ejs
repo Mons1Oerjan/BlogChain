@@ -31,12 +31,12 @@
         </div>
         <% if(currentUser){ %>
             <div class="row">
-                <form action="/<%=currentUser.username%>/profile/?_method=DELETE" method="POST" class="delete-form">
+                <form action="/user/<%=currentUser.username%>/profile/?_method=DELETE" method="POST" class="delete-form">
                     <button class="waves-effect waves-light btn red">Danger: Delete Profile</button>
                 </form>
             </div>
             <div class="row">
-                <form action="/<%=currentUser.username%>/update" method="GET" class="update-form">
+                <form action="/user/<%=currentUser.username%>/update" method="GET" class="update-form">
                     <button class="waves-effect waves-light btn yellow">Update Username</button>
                 </form>
         <% } %>
