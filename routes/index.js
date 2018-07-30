@@ -93,9 +93,9 @@ router.get("/logout", function(req, res) {
  * Dashboard View
  */
 router.get("/dashboard", function(req, res) {
-    
-    getPrices(function(prices) {
-        res.render("main/blogchainmain"); //is this right?
+
+    getPrices(function(prices){
+        res.render("main/blogchainmain", prices)
     });
 
 });
@@ -125,6 +125,7 @@ router.get("/dashboard/arbitrage", function(req, res) {
  */ 
 var getPrices = function(callback) {
     var summaryURL = "https://api.cryptowat.ch/markets/{exchange}/{pair}/summary"; //baseURL for price-related API requests
+    var exchangePairList = getExchangePairList();
 
     /**
     * Gets the summary given a market exchange, a pair, and the route.
@@ -180,10 +181,38 @@ var getPrices = function(callback) {
     };
 
 
-    var testExchange = 'gdax';
-    var testPair = 'btcusd';
-    var testRoute = summaryURL.replace('{exchange}', testExchange).replace('{pair}', testPair);
-    getSummary(testExchange, testPair, testRoute, callback);
+    var i, exchange, pair, route;
+    for (i = 0; i < exchangePairList.length; ++i) {
+        exchange = exchangePairList[i][1];
+        pair = exchangePairList[i][0];
+        route = summaryURL.replace('{exchange}', exchange).replace('{pair}', pair);
+        getSummary(exchange, pair, route, function(exchange, pair, prices) {
+            return prices;
+        })
+    }
+
+}
+
+/**
+ * Populates a 2D array with couples of exchanges/pairs
+ */
+var getExchangePairList = function() {
+
+    var couples = [
+
+        ['btcusd','gdax'],
+        ['btcusd','quadriga'],
+        ['btcusd','bitbay'],
+        ['ethusd','gdax'],
+        ['ethusd','quadriga'],
+        ['ethusd','bitbay'],
+        ['ltcusd','gdax'],
+        ['ltcusd','quadriga'],
+        ['ltcusd','bitbay']
+
+    ];
+
+    return couples;
 
 }
 
