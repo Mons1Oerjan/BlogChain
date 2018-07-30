@@ -1,17 +1,19 @@
 <% include ../partials/header %>
 
-<div class="container">
-    <h1 class = "center-align" style="color: black;"> BLOGS</h1>
-    <a class="waves-effect waves-light btn" href="/blogs/new">Add a new blog</a>
+  <div class="container" align="center">
+      <h1 class = "center-align" style="color: black;"> BLOGS</h1>
+      <a class="waves-effect waves-light btn" href="/blogs/new" >Add a new blog</a>
+      <br>
+    </div>
     <div class="row" style="margin-bottom:100px;">
         <% blogs.forEach(function(blog){ %>
-        <div class="col s12 m2 l4">
-            <div class="card">
+        <div class="col s12 m6 l4">
+            <div class="card large">
                 <div class="card-image">
                     <img src= "<%= blog.imageURL %> ">
                     <span class="card-title"><%= blog.name %></span>
                 </div>
-                <div class="card-content overFlow" style="color: black;">
+                <div class="card-content overFlow">
                     <p><%= blog.content %></p>
                 </div>
                 <div class="card-action">
@@ -21,6 +23,4 @@
         </div>
         <% }); %>
     </div>
-</div>
-
 <% include ../partials/footer %>
