@@ -63,16 +63,17 @@ router.put("/:username/update", isUserLoggedIn, function(req, res) {
     //var userToUpdate = { _id: req.user.id };
     console.log(req.user._id);
     console.log(req.body.new_username);
-    User.findByIdAndUpdate(req.user._id, {$set: {username: req.body.new_username}, 
-        function(err, result) {
+    User.findByIdAndUpdate(req.user._id, {$set: {username: req.body.new_username}}, 
+        {runValidators: true}, function(err,result) {
             if(err) {
                 console.log("find in username/update: " + err);
-                req.flash("Error finding user!");
+                req.flash("Error updating user!");
                 return res.redirect("/");
             }
-            console.log(result);
-            return res.redirect("/");
-        }}
+
+                return res.redirect("/");
+
+        }
     );
 });
 
