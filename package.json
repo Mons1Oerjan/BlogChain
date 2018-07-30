@@ -4,14 +4,14 @@
   "engines": {
     "node": "6.11.1"
   },
-  "description": "YelpCamp v1",
+  "description": "BlogChain v1",
   "main": "server.js",
   "scripts": {
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Colt Steele",
-  "license": "ISC",
+  "author": "Team BlogChain",
+  "license": "",
   "dependencies": {
     "body-parser": "^1.14.1",
     "cloudinary": "^1.11.0",
