@@ -1,33 +1,24 @@
 <% include ../partials/header %>
 
-<div style="margin-bottom:100px;">
-  <br>
-  <br>
-  <div align="center" style="width:80%; margin: auto;">
-    <h1 style="text-align: center">Create a BlogChain blog</h1>
-    <form style="width:100%;" action="/blogs" method="POST" enctype="multipart/form-data" style="margin: 0 auto;">
-      <div style="width:50%;">
-        <textarea style="width:100%;" id="textarea1" class="materialize-textarea" name="name" minlength="2" maxlength="50" required></textarea>
+<div class="container">
+    <h1 class="center">Create a New Blog</h1>
+    <form action="/blogs" method="POST" enctype="multipart/form-data">
+        <textarea id="textarea1" class="materialize-textarea" name="name" minlength="2" maxlength="50" required></textarea>
         <label for="textarea1">Title</label>
-      </div>
-      <textarea style="width:100%;" id="textarea2" class="materialize-textarea" name="description" minlength="20" maxlength="1000" required></textarea>
-      <label for="textarea2">Content</label>
-      <div style="width:30%; margin: auto;" class="file-field input-field">
-        <div class="btn">
-          <span>File</span>
-          <input type="file" name="image" accept="image/png, image/jpeg, image/jpg, image/gif">
+        <textarea id="textarea2" class="materialize-textarea" name="description" minlength="20" maxlength="1000" required></textarea>
+        <label for="textarea2">Content</label>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type="file" name="image" accept="image/png, image/jpeg, image/jpg, image/gif">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Upload your image">
+            </div>
         </div>
-        <div class="file-path-wrapper">
-          <input class="file-path validate" type="text" placeholder="Upload your image">
-        </div>
-      </div>
-      <br>
-      <button class="btn btn-primary">Submit <i class="material-icons right">send</i> </button>
+        <button class="waves-effect waves-light btn">Submit <i class="material-icons right">send</i></button>
     </form>
-    <br>
-    <div>
-        <a href="/blogs">Go Back</a>
-    </div>
-  </div>
+    <a class="btn right" href="/blogs">Go Back</a>
 </div>
+
 <% include ../partials/footer %>
