@@ -94,8 +94,11 @@ router.get("/logout", function(req, res) {
  */
 router.get("/dashboard", function(req, res) {
 
-    getPrices(function(prices){
-        res.render("main/blogchainmain", prices)
+    //res.render("main/blogchainmain");
+    getPrices(function(allPrices){
+        res.render("main/blogchainmain", {
+            prices: allPrices
+        });
     });
 
 });
@@ -146,7 +149,6 @@ var getPrices = function(callback) {
             }
 
             if (response.statusCode && response.statusCode !== 200) {
-                console.log(route);
                 console.log('Summary GET request status code: ' + response.statusCode);
                 return callback(exchange, pair, {
                     error: 'Summary status code is not 200.'
@@ -177,10 +179,13 @@ var getPrices = function(callback) {
                 lowest: parseFloat(jsonBody.result.price.low),
                 volume: parseFloat(jsonBody.result.volume)
             });
-
         });
     };
 
+
+    /*getSummary(exchangePairList[0][1], exchangePairList[0][0], summaryURL.replace('{exchange}', exchangePairList[0][1]).replace('{pair}', exchangePairList[0][0]), function(exchange, pair, prices) {
+        return prices;
+    });*/
 
     var i, exchange, pair, route;
     for (i = 0; i < exchangePairList.length; ++i) {

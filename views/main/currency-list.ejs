@@ -10,34 +10,20 @@
 
 <div class="container">
 	<h1>Currencies</h1>
-    <form action="/dashboard" method="POST" name="refreshPrices">
-		<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
-            <i class="material-icons left">trending_up</i>
-            Refresh Prices
-        </a>
-
-        <% prices.forEach(function(price){ %>
-        	<%= price.pair %>
-            <%= price.exchange %>
-            <%= price.last %>
-            <%= price.highest %>
-            <%= price.lowest %>
-            <%= price.volume %>
-        <% }); %>
-    </form>
+	<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
+        <i class="material-icons left">trending_up</i>
+        Refresh Prices
+    </a>
+    
+    <% prices.forEach(function(price){ %>
+    	<%= price.pair %>
+        <%= price.exchange %>
+        <%= price.last %>
+        <%= price.highest %>
+        <%= price.lowest %>
+        <%= price.volume %>
+    <% }); %>
 </div>
 
-<!-- Probably not needed 
-<div class="container">
-
-	<b>Exchange:</b> <input id="last" type="text" value="gdax" readonly> <br>
-  	<b>Pair:</b> <input id="last" type="text" value="btcusd" readonly> <br>
-  	<b>Last:</b> <input id="last" type="text" value="" readonly> <br>
-  	<b>Highest:</b> <input id="high" type="text" value="" readonly> <br>
-  	<b>Lowest:</b> <input id="low" type="text" value="" readonly> <br>
-  	<b>Volume:</b> <input id="vol" type="text" value="" readonly> <br>
-
-</div>
--->
 
 	
