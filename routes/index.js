@@ -101,7 +101,6 @@ router.get("/dashboard", function(req, res) {
 
             return a < b ? -1 : a > b ? 1 : 0;
         });
-        console.log(allPrices);
         res.render("main/blogchainmain", {
             prices: allPrices
         });
