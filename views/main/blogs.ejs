@@ -1,29 +1,26 @@
 <% include ../partials/header %>
 
-<div class="container">
-    <p>
-        <a class="btn btn-primary" href="/blogs/new">Add a new blog<a>
-    </p>
-</div>
-
-<div class="row">
-    <h1 class = "center-align"> BLOGS</h1>
-    <% blogs.forEach(function(blog){ %>
-    <div class="col s12 m4">
-        <div class="card">
-            <div class="card-image">
-                <img src= "<%= blog.imageURL %> ">
-                <span class="card-title"><%= blog.name %></span>
-            </div>
-            <div class="card-content overFlow">
-                <p><%= blog.content %></p>
-            </div>
-            <div class="card-action">
-                <a href="/blogs/<%= blog._id %>">Read More</a>
+  <div class="container" align="center">
+      <h1 class = "center-align" style="color: black;"> BLOGS</h1>
+      <a class="waves-effect waves-light btn" href="/blogs/new" >Add a new blog</a>
+      <br>
+    </div>
+    <div class="row" style="margin-bottom:100px;">
+        <% blogs.forEach(function(blog){ %>
+        <div class="col s12 m6 l4">
+            <div class="card large">
+                <div class="card-image">
+                    <img src= "<%= blog.imageURL %> ">
+                    <span class="card-title"><%= blog.name %></span>
+                </div>
+                <div class="card-content overFlow">
+                    <p><%= blog.content %></p>
+                </div>
+                <div class="card-action">
+                    <a href="/blogs/<%= blog._id %>">Read More</a>
+                </div>
             </div>
         </div>
+        <% }); %>
     </div>
-    <% }); %>
-</div>
-
 <% include ../partials/footer %>
