@@ -76,7 +76,7 @@ var getAllPrices = function(exchangePairList, callback) {
 
         requestPromise.then(function(result) {
             allPrices.push(result);
-            if (allPrices.length === 8) {  // hack
+            if (allPrices.length === 9) {  // hack
                 return callback(allPrices);
             }
         }, function(err) {
