@@ -24,12 +24,40 @@ router.get("/:username/profile", function(req, res) {
     User.find(filter, function(err, userFound) {
         //console.log(userFound);
         var uname = userFound[0].username;
+        var name = userFound[0].name;
+        var wallet = userFound[0].wallet;
         //console.log(uname);
-        res.render('main/profile', { uname: uname }, function(err,html) { 
+        res.render('main/profile', { uname: uname, name: name, wallet: wallet }, function(err,html) { 
             if(err){ console.log("get username/profile: " + err); res.sendStatus(500);}
             res.send(html);
         });
     });
+});
+
+/**
+ * Update user profile
+ */
+router.put("/:username/updateprof", function(req, res) {
+    User.findById(req.user._id, 
+        function(err, userFound) {
+            if(err){
+                console.log("error in username/update: " + err);
+                req.flash("Error updating user!");
+                return res.redirect("/");
+            }
+            userFound.name = req.body.name;
+            userFound.wallet = req.body.wallet;
+
+            userFound.save(function (err, u) {
+                if(err) {
+                    console.log(err);
+                    req.flash("Could not update username!");
+                    return res.redirect("/dashboard");
+                }
+                //console.log("user saved: " + u);
+                return res.redirect("/dashboard");
+            });
+     });
 });
 
 /**
@@ -52,17 +80,17 @@ router.delete("/:username/profile", function(req, res) {
 /**
  * Update Username
  */
-router.get("/:username/update", function(req, res) {
-    res.render('main/updateprofile', { user : req.params.username });
+router.get("/:username/updateusername", function(req, res) {
+    res.render('main/updateusername', { user : req.params.username });
 });
 
 /**
  * Process Update Username
  */
-router.put("/:username/update", isUserLoggedIn, function(req, res) {
+router.put("/:username/updateusername", isUserLoggedIn, function(req, res) {
     //var userToUpdate = { _id: req.user.id };
-    console.log(req.user._id);
-    console.log(req.body.new_username);
+    //console.log(req.user._id);
+    //console.log(req.body.new_username);
     User.findById(req.user._id, 
         function(err, userFound) {
             if(err){

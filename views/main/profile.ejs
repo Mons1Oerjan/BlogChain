@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
     <body> 
-        <div class="header">
+        <div class="center-align">
             <h2>Your Profile</h2>
         </div>
         <div class="container">
@@ -11,22 +11,22 @@
           </div>-->
             <div class="section">
               <h2>User Info</h2>
-                <p>Name</p>
-                  <input type="text" name="name">
-                <p>Location:</p>
-                  <input type="text" name="location">
-                <p>Wallet:</p>
-                  <input type="text" name="wallet">
+                <form action="/user/<%=currentUser.username%>/updateprof?_method=PUT" method="POST">
+                  <textarea id="textarea1" class="materialize-textarea" name="name" minlength="2" maxlength="50"><%= name%></textarea>
+                  <label for="textarea1">Your Name</label>
+                  <textarea id="textarea2" class="materialize-textarea" name="wallet" minlength="20" maxlength="50"><%= wallet%></textarea>
+                  <label for="textarea2">Wallet Address</label>
+                  <br />
+                  <button class="btn waves-effect waves-light">Update Name/Wallet</button>
+                </form>
             </div>
         </div>
         <% if(currentUser){ %>
             <div class="ceter-align">
                 <form action="/user/<%=currentUser.username%>/profile/?_method=DELETE" method="POST" class="delete-form">
                     <button class="waves-effect waves-light btn red">Danger: Delete Profile</button>
-                </form>
-            </div>
-            <div class="center-align">
-                <form action="/user/<%=currentUser.username%>/update" method="GET" class="update-form">
+                </form> 
+                <form action="/user/<%=currentUser.username%>/updateusername" method="GET" class="update-form">
                     <button class="waves-effect waves-light btn blue-grey lighten-1">Update Username</button>
                 </form>
             </div>
