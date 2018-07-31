@@ -55,7 +55,6 @@ router.put("/:commentId", isUserLoggedIn, checkAuthorComment, function(req, res)
             req.flash('error', err.message);
             res.redirect("/blogs/" + req.params.id);
       }else{
-            console.log(updated);
             req.flash('success', 'Comment updated');
             res.redirect("/blogs/" + req.params.id);
       }

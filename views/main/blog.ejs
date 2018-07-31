@@ -24,8 +24,12 @@
           <br>
         </div>
         <h5>Comments</h5>
-        <div align="left">
-          <% blog.comments.forEach(function(comment){ %>
+          <% if(blog.comments.length===0){ %>
+            <br>
+              <p style="font-size:1.3em"><i>Be the first to write a comment!</i></p>
+            <br>
+          <% } else { blog.comments.forEach(function(comment){ %>
+            <div align="left">
             <br>
             <form style="width: 100%;" id="<%= comment._id %>" onsubmit="return check()" action="#" method="POST">
               <textarea style="width: 100%; font-size: 1.3em;" id="<%= comment._id %>text" name="comment[text]" class="materialize-textarea" maxlength="100" minlength="2" required readonly><%= comment.text %></textarea>
@@ -34,12 +38,13 @@
                 <span><%= moment(comment.createdAt).fromNow() %></span>
               </div>
               <% if(currentUser && comment.author.id.equals(currentUser._id) ){ %>
-                    <button style="margin: 10px 5px 10px 0px;" class="waves-effect waves-light btn red" onclick="deleteComment('<%= blog._id %>' , '<%= comment._id %>');">Delete</button>
-                    <button style="margin: 10px 5px 10px 5px;" id = "<%= comment._id%>btn" class="btn btn-primary waves-effect waves-light" onclick="editComment('<%= blog._id %>' , '<%= comment._id %>');">Edit</button>
+                  <button style="margin: 10px 5px 10px 0px;" id = "<%= comment._id%>cnl" class="waves-effect waves-light btn red" onclick="deleteComment('<%= blog._id %>' , '<%= comment._id %>');">Delete</button>
+                  <button style="margin: 10px 5px 10px 5px;" id = "<%= comment._id%>btn" class="btn btn-primary waves-effect waves-light" onclick="editComment('<%= blog._id %>' , '<%= comment._id %>');">Edit</button>
               <% } %>
             </form>
-          <% }) %>
-        </div>
+            <% }); %>
+            </div>
+        <% } %>
     </div>
  </div>
 <!-- Scripts for edit and delete comments -->
@@ -68,6 +73,7 @@
     var element = document.getElementById(elementId);
     var textProp = element.textContent.replace(/\s/g,'')
 
+
     var elementTextid = commentID+"text";
     var elementText = document.getElementById(elementTextid);
     var text = elementText.value;
@@ -84,5 +90,20 @@
     }
     elementText.value = text;
   }
+
+  // function reverse(blogID, commentID, isNeutral){
+  //     if(isNeutral){
+  //         var currentForm = document.getElementById(commentID);
+  //         var editBtn = document.getElementById(commentID+"btn");
+  //         var cancelBtn = document.getElementById(commentID+"cnl");
+  //         var elementText = document.getElementById(commentID+"text");
+  //         elementText.readOnly = true;
+  //         editBtn.textContent='Edit';
+  //         cancelBtn.textBtn='Delete';
+  //         currentForm.action = "#";
+  //     }else{
+  //
+  //     }
+  // }
 </script>
 <% include ../partials/footer %>
