@@ -95,7 +95,7 @@ router.get("/logout", function(req, res) {
  */
 router.get("/dashboard", function(req, res) {
     cryptoCurrencyCrawler.getPrices(function(allPrices) {
-        allPrices.sort(function(a, b) {
+        allPrices.sort(function(a, b) { //based off of code by Pramod Vemulapalli at https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
             a = a.pair;
             b = b.pair;
 
