@@ -16,6 +16,7 @@ var request = require('request');
 
 var User = require("../models/user");
 var Arbitrage = require('../models/arbitrages');
+var cryptoCurrencyCrawler = require('../methods/cryptoCurrencyCrawler');
 
 /**
  * Welcome View
@@ -93,14 +94,12 @@ router.get("/logout", function(req, res) {
  * Dashboard View
  */
 router.get("/dashboard", function(req, res) {
-
-    //res.render("main/blogchainmain");
-    getPrices(function(allPrices){
+    cryptoCurrencyCrawler.getPrices(function(allPrices) {
+        console.log(allPrices);
         res.render("main/blogchainmain", {
             prices: allPrices
         });
     });
-
 });
 
 router.get("/dashboard/arbitrage", function(req, res) {
@@ -121,106 +120,5 @@ router.get("/dashboard/arbitrage", function(req, res) {
             }
         });
 });
-
-
-/**
- * Get the prices for each cryptocurrency
- */ 
-var getPrices = function(callback) {
-    var summaryURL = "https://api.cryptowat.ch/markets/{exchange}/{pair}/summary"; //baseURL for price-related API requests
-    var exchangePairList = getExchangePairList();
-
-    /**
-    * Gets the summary given a market exchange, a pair, and the route.
-    */
-    var getSummary = function(exchange, pair, route, callback) {
-        request.get(route, function(error, response, body) {
-            if (error) {
-                console.log('Summary GET failed for: ' + route);
-                return callback(exchange, pair, {
-                    error: 'Summary GET request failed'
-                });
-            }
-
-            if (!response) { //response missing
-                console.log('Summary GET Request: Missing response');
-            } else if (!body) { //body missing
-                console.log('Summary GET Request: Missing body');
-            }
-
-            if (response.statusCode && response.statusCode !== 200) {
-                console.log('Summary GET request status code: ' + response.statusCode);
-                return callback(exchange, pair, {
-                    error: 'Summary status code is not 200.'
-                });
-            }
-
-            jsonBody = JSON.parse(body);
-
-            if (!jsonBody.result) { //no results returned
-                return callback(exchange, pair, {
-                    error: 'Summary contains no results.'
-                });
-            } else if (!jsonBody.result.price) { //no prices listed in summary
-                return callback(exchange, pair, {
-                    error: 'Summary contains no prices.'
-                });
-            } else if (!jsonBody.result.volume) { //no volume for the exchange + pair listed
-                return callback(exchange, pair, {
-                    error: 'Summary does not indicate a volume.'
-                });
-            }
-
-            return callback(exchange, pair, { //return desired information
-                exchange: exchange,
-                pair: pair,
-                last: parseFloat(jsonBody.result.price.last),
-                highest: parseFloat(jsonBody.result.price.high),
-                lowest: parseFloat(jsonBody.result.price.low),
-                volume: parseFloat(jsonBody.result.volume)
-            });
-        });
-    };
-
-
-    /*getSummary(exchangePairList[0][1], exchangePairList[0][0], summaryURL.replace('{exchange}', exchangePairList[0][1]).replace('{pair}', exchangePairList[0][0]), function(exchange, pair, prices) {
-        return prices;
-    });*/
-
-    var i, exchange, pair, route;
-    for (i = 0; i < exchangePairList.length; ++i) {
-        exchange = exchangePairList[i][1];
-        pair = exchangePairList[i][0];
-        route = summaryURL.replace('{exchange}', exchange).replace('{pair}', pair);
-        getSummary(exchange, pair, route, function(exchange, pair, prices) {
-            return prices;
-        })
-    }
-
-}
-
-/**
- * Populates a 2D array with couples of exchanges/pairs
- */
-var getExchangePairList = function() {
-
-    var couples = [
-
-        ['btcusd','gdax'],
-        ['btcusd','quadriga'],
-        ['btcusd','bitbay'],
-        ['ethusd','gdax'],
-        ['ethusd','quadriga'],
-        ['ethusd','bitbay'],
-        ['ltcusd','gdax'],
-        ['ltcusd','bitfinex'],
-        ['ltcusd','bitbay']
-
-    ];
-
-    return couples;
-
-}
-
 
 module.exports = router;
