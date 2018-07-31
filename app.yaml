@@ -1,0 +1,31 @@
+# Google Cloud Platform specs
+runtime: nodejs
+env: flex
+
+# specify networking configs
+# network:
+#     name: blogchain
+
+# defines computing resources
+resources:
+    cpu: 1
+    memory_gb: 6
+    disk_size_gb: 10
+
+# enables auto-scaling
+automatic_scaling:
+    min_num_instances: 1
+    max_num_instances: 10
+    cool_down_period_sec: 180
+    cpu_utilization:
+        target_utilization: 0.7
+
+# specifies health-checks
+# featureSettings:
+#     splitHealthChecks: true
+
+# define production environment variables
+env_variables:
+    ENVIRONMENT: production
+    # PORT: 8888,
+    # IP:

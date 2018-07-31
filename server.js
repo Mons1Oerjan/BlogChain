@@ -126,19 +126,32 @@ app.use("/", indexRouting);
 app.use("/blogs", blogsRouting);
 app.use("/blogs/:id/comments", commentsRouting);
 
-/**
- * Start the HTTP server
- */
-httpServer.listen(3000, function() {
-    console.log('HTTP Server started at http://localhost:3000');
+var runServer = function(env) {
+    // if (env && env === 'production') {
+    //     /**
+    //      * Start the production server
+    //      */
+    //     app.listen(process.env.PORT, process.env.IP, function() {
+    //        console.log("The Server Has Started!");
+    //     });
+    // } else {
+        /**
+         * Start the HTTP server
+         */
+        httpServer.listen(8080, function() {
+            console.log('HTTP Server started at http://localhost:3000');
 
-    /**
-     * Start the HTTPS Server
-     */
-    httpsServer.listen(8443, function() {
-        console.log('HTTPS Server started at https://localhost:8443');
-    });
-});
+            /**
+             * Start the HTTPS Server
+             */
+            httpsServer.listen(8081, function() {
+                console.log('HTTPS Server started at https://localhost:8443');
+            });
+        });
+    // }
+};
+
+runServer(process.env.ENVIRONMENT);
 
 /**
  * Fetch arbitrages once every hour
@@ -147,11 +160,3 @@ setInterval(function() {
     console.log("Start fetching arbitrages.");
     arbitrageCrawler.getArbitrages();
 }, everyHour);
-
-
-/**
- * TODO: Dynamic connection, once deployed.
- */
-// app.listen(process.env.PORT, process.env.IP, function() {
-//    console.log("The Server Has Started!");
-// });
