@@ -1,29 +1,65 @@
-<!-- 
-	Note to self: Eventually I'll need to figure out a way to add an 
-	arbitrary amount of containers to the view. This is probably easy to
-	do; it just involves front-end stuff I don't understand.
-
-	Theory: Load an empty view and populate it with dynamic divs elsewhere.
-	This file will probably end up being pretty small (header and a container
-	for the coin list)
--->
-
 <div class="container">
-	<h1>Currencies</h1>
+	<div class="container" align="center">
+      <h1 class = "center-align" style="color: black;"> Currencies</h1>
+      <br>
+  </div>
+  <div class="row" style="margin-bottom:100px;">
+      <% var i = 0 %>
+			<% prices.forEach(function(price){ %>
+			<% if (i % 3 === 0) { %>
+			<div class="col s12 m6 l4">
+					<div class="card large">
+							<h2 class="header"> <%=price.pair%> </h2>
+	            <div class="image">
+	                <img src= "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png">
+	            </div>
+
+							<% } %>
+							<div class="col l3" style="column-fill:auto;">
+									<ul>
+											<li>
+													<div>
+															<b>Exchange</b>
+															<br>
+															<%= price.exchange %>
+													</div>
+											</li>
+											<li>
+													<div>
+															<b>Last Sell Price</b>
+															<br>
+															<%= price.last %>
+													</div>
+											</li>
+											<li>
+													<div>
+															<b>Lowest Sell Price</b>
+															<br>
+															<%= price.lowest %>
+													</div>
+											</li>
+											<li>
+													<div>
+															<b>Highest Sell Price</b>
+															<br>
+															<%= price.highest %>
+													</div>
+											</li>
+											<li>
+													<div>
+															<b>Volume Left</b>
+															<br>
+															<%= price.volume %>
+													</div>
+											</li>
+									</ul>
+							</div>
+					<% ++i %>
+		      <% }); %>
+		  </div>
+	</div>
 	<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
         <i class="material-icons left">trending_up</i>
         Refresh Prices
-    </a>
-    
-    <% prices.forEach(function(price){ %>
-    	<%= price.pair %>
-        <%= price.exchange %>
-        <%= price.last %>
-        <%= price.highest %>
-        <%= price.lowest %>
-        <%= price.volume %>
-    <% }); %>
+  </a>
 </div>
-
-
-	
