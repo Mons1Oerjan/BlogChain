@@ -95,6 +95,7 @@ router.get("/logout", function(req, res) {
  */
 router.get("/dashboard", function(req, res) {
     cryptoCurrencyCrawler.getPrices(function(allPrices) {
+        allPrices.sort();
         res.render("main/blogchainmain", {
             prices: allPrices
         });

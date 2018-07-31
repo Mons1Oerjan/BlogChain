@@ -8,10 +8,10 @@ var summaryURL = "https://api.cryptowat.ch/markets/{exchange}/{pair}/summary";
 var getExchangePairList = function() {
     return [
         ['btcusd', 'gdax'],
-        ['btcusd', 'quadriga'],
+        ['btcusd', 'gemini'],
         ['btcusd', 'bitbay'],
         ['ethusd', 'gdax'],
-        ['ethusd', 'quadriga'],
+        ['ethusd', 'gemini'],
         ['ethusd', 'bitbay'],
         ['ltcusd', 'gdax'],
         ['ltcusd', 'bitfinex'],
@@ -56,6 +56,8 @@ var getAllPrices = function(exchangePairList, callback) {
                 } else if (!jsonBody.result.price) { //no prices listed in summary
                     reject('Summary contains no prices.');
                 } else if (!jsonBody.result.volume) { //no volume for the exchange + pair listed
+                    console.log(route);
+                    console.log(jsonBody.result);
                     reject('Summary does not indicate a volume.');
                 }
 
