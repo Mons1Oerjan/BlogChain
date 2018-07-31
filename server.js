@@ -143,13 +143,13 @@ var runServer = function(env) {
          * Start the HTTP server
          */
         httpServer.listen(8080, function() {
-            console.log('HTTP Server started at http://localhost:3000');
+            console.log('HTTP Server started at http://localhost:8080');
 
             /**
              * Start the HTTPS Server
              */
             httpsServer.listen(8081, function() {
-                console.log('HTTPS Server started at https://localhost:8443');
+                console.log('HTTPS Server started at https://localhost:8081');
             });
         });
     // }
