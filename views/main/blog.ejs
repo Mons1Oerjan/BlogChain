@@ -15,7 +15,7 @@
         <div align="center">
           <% if(currentUser){ %>
             <form style="width: 80%;" action="/blogs/<%= blog._id %>/comments/new" method="POST">
-                <textarea style="width: 100%; font-size: 1.3em;" id="commentArea" class="materialize-textarea" name="comment[text]" maxlength="100" minlength="2" required placeholder="Have a comment? Write your comment here."></textarea>
+                <textarea style="width: 100%; font-size: 1.3em;" id="commentArea" class="materialize-textarea" length="100" name="comment[text]" maxlength="100" minlength="2" required placeholder="Have a comment? Write your comment here."></textarea>
                 <label for="commentArea">Add your comment</label>
                 <br>
                 <button style="margin: 5px;" class="btn btn-primary waves-effect waves-light">Submit</button>
@@ -31,8 +31,8 @@
           <% } else { blog.comments.forEach(function(comment){ %>
             <div align="left">
             <br>
-            <form style="width: 100%;" id="<%= comment._id %>" onsubmit="return check()" action="#" method="POST">
-              <textarea style="width: 100%; font-size: 1.3em;" id="<%= comment._id %>text" name="comment[text]" class="materialize-textarea" maxlength="100" minlength="2" required readonly><%= comment.text %></textarea>
+            <form style="width: 100%;" id="<%= comment._id %>" onsubmit="return check( '<%= comment._id %>' );" action="#" method="POST">
+              <textarea style="width: 100%; font-size: 1.3em;" id="<%= comment._id %>text" name="comment[text]" class="materialize-textarea" length="100" maxlength="100" minlength="2" required readonly><%= comment.text %></textarea>
               <div style="font-size: 0.8em;">
                 <strong><%= comment.author.username %></strong>
                 <span><%= moment(comment.createdAt).fromNow() %></span>
@@ -50,60 +50,50 @@
 <!-- Scripts for edit and delete comments -->
 <script type="text/javascript">
 
-  function check(){
-    var element = document.activeElement;
-    var textProp = element.textContent.replace(/\s/g,'')
-    if(textProp.localeCompare('Save')===0){
+  function check(commentID){
+    var currentForm = document.getElementById(commentID);
+    var actionFrom = currentForm.action.replace(/\s/g,'');
+    if(actionFrom.endsWith("#")){
       return false;
-    }else{
-      return true;
     }
+    return true;
   }
 
   function deleteComment(blogID, commentID)
   {
     var currentForm = document.getElementById(commentID);
-    currentForm.action = "/blogs/"+blogID+"/comments/"+commentID+"?_method=DELETE";
+    var cancelBtn = document.getElementById(commentID+"cnl");
+    var element = document.getElementById(commentID+"btn");
+    var elementText = document.getElementById(commentID+"text");
+    if(cancelBtn.textContent.replace(/\s/g,'').localeCompare('Delete')===0){
+      currentForm.action = "/blogs/"+blogID+"/comments/"+commentID+"?_method=DELETE";
+    }else{
+      cancelBtn.textContent = "Delete";
+      element.textContent="Edit";
+      currentForm.action = "#";
+      elementText.readOnly = true;
+      var text = elementText.value;
+      elementText.value = text;
+    }
   }
 
   function editComment(blogID, commentID)
   {
-
-    var elementId = commentID+"btn";
-    var element = document.getElementById(elementId);
-    var textProp = element.textContent.replace(/\s/g,'')
-
-
-    var elementTextid = commentID+"text";
-    var elementText = document.getElementById(elementTextid);
-    var text = elementText.value;
-
-    if(textProp.localeCompare('Edit')===0){
-      element.textContent='Save';
-      elementText.readOnly = false;
-    }
-    else{
-      element.textContent='Edit';
-      elementText.readOnly = true;
-      var currentForm = document.getElementById(commentID);
+    var currentForm = document.getElementById(commentID);
+    var element = document.getElementById(commentID+"btn");
+    var cancelBtn = document.getElementById(commentID+"cnl");
+    var textProp = element.textContent.replace(/\s/g,'');
+    var elementText = document.getElementById(commentID+"text");
+    if(textProp.localeCompare('Save')===0){
       currentForm.action = "/blogs/"+blogID+"/comments/"+commentID+"?_method=PUT";
+    }else{
+      element.textContent="Save";
+      cancelBtn.textContent="Cancel";
+      currentForm.action ="#";
+      elementText.readOnly = false;
+      var text = elementText.value;
+      elementText.value = text;
     }
-    elementText.value = text;
   }
-
-  // function reverse(blogID, commentID, isNeutral){
-  //     if(isNeutral){
-  //         var currentForm = document.getElementById(commentID);
-  //         var editBtn = document.getElementById(commentID+"btn");
-  //         var cancelBtn = document.getElementById(commentID+"cnl");
-  //         var elementText = document.getElementById(commentID+"text");
-  //         elementText.readOnly = true;
-  //         editBtn.textContent='Edit';
-  //         cancelBtn.textBtn='Delete';
-  //         currentForm.action = "#";
-  //     }else{
-  //
-  //     }
-  // }
 </script>
 <% include ../partials/footer %>

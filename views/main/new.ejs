@@ -3,9 +3,9 @@
 <div class="container">
     <h1 class="center">Create a New Blog</h1>
     <form action="/blogs" method="POST" enctype="multipart/form-data">
-        <textarea id="textarea1" class="materialize-textarea" name="name" minlength="2" maxlength="50" required></textarea>
+        <textarea id="textarea1" class="materialize-textarea" name="name" length="50" minlength="2" maxlength="50" required></textarea>
         <label for="textarea1">Title</label>
-        <textarea id="textarea2" class="materialize-textarea" name="description" minlength="20" maxlength="1000" required></textarea>
+        <textarea id="textarea2" class="materialize-textarea" name="description" length="1000" minlength="20" maxlength="1000" required></textarea>
         <label for="textarea2">Content</label>
         <div class="file-field input-field">
             <div class="btn">
