@@ -2,12 +2,11 @@
 <script>
     $(document).ready(function() {
         $('#arbitrageTable').DataTable({
-            "order": [[ 10, "desc" ]],
+            "order": [[ 2, "desc" ]],
             "columnDefs": [
-                { "width": "2em", "targets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
-                { "width": "10em", "targets": 10 },
+                { "width": "20em", "targets": 11 }
             ],
-            "pageLength": 10,
+            "pageLength": 30,
             "scrollX": true,
             "scrollCollapse": true,
             "scrollY": "31.25em"

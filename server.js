@@ -40,7 +40,7 @@ var arbitrageCrawler = require('./methods/arbitrageCrawler');
 /**
  * DB Connection
  */
- mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 var options = {
     useNewUrlParser: true,
@@ -66,19 +66,19 @@ mongoose.connect(dbConnectionString, options)
 var httpsOptions = {
     key: sslConfigs.privateKey,
     cert: sslConfigs.certificate
- };
+};
 
- /**
-  * Create HTTP Server
-  */
- var httpServer = http.createServer(app);
+/**
+ * Create HTTP Server
+ */
+var httpServer = http.createServer(app);
 
- /**
-  * Create HTTPS Server
-  */
- var httpsServer = https.createServer(httpsOptions, app);
+/**
+ * Create HTTPS Server
+ */
+var httpsServer = https.createServer(httpsOptions, app);
 
- var everyHour = 60 * 60 * 1000;
+var everyHour = 60 * 60 * 1000;
 
 /**
  * App Configurations
@@ -133,28 +133,19 @@ app.use("/blogs/:id/comments", commentsRouting);
 app.use("/user", profileRouting);
 
 var runServer = function(env) {
-    // if (env && env === 'production') {
-    //     /**
-    //      * Start the production server
-    //      */
-    //     app.listen(process.env.PORT, process.env.IP, function() {
-    //        console.log("The Server Has Started!");
-    //     });
-    // } else {
-        /**
-         * Start the HTTP server
-         */
-        httpServer.listen(8080, function() {
-            console.log('HTTP Server started at http://localhost:8080');
+    /**
+     * Start the HTTP server
+     */
+    httpServer.listen(8080, function() {
+        console.log('HTTP Server started at http://localhost:8080');
 
-            /**
-             * Start the HTTPS Server
-             */
-            httpsServer.listen(8081, function() {
-                console.log('HTTPS Server started at https://localhost:8081');
-            });
+        /**
+         * Start the HTTPS Server
+         */
+        httpsServer.listen(8081, function() {
+            console.log('HTTPS Server started at https://localhost:8081');
         });
-    // }
+    });
 };
 
 runServer(process.env.ENVIRONMENT);
