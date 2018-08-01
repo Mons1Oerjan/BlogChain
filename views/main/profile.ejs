@@ -1,18 +1,23 @@
 <% include ../partials/header %>
 
 <div class="container">
-    <div class="row center"> 
-
+    <div class="row center">
         <h2>Your Profile</h2>
-        <div align="left">
+        <div align="left" style="margin:30px;">
             <h5>User Info</h5>
               <form action="/user/<%=uname%>/updateprof?_method=PUT" method="POST">
-                <textarea id="textarea1" class="materialize-textarea" name="name" minlength="2" maxlength="50"><%= name%></textarea>
-                <label for="textarea1">Your Name</label>
-                <textarea id="textarea2" class="materialize-textarea" name="wallet" minlength="20" maxlength="50"><%= wallet%></textarea>
-                <label for="textarea2">Wallet Address</label>
-                <br />
-                <button class="waves-effect waves-light btn-small">Update Name/Wallet</button>
+                <div>
+                  <textarea id="textarea1" class="materialize-textarea" name="name" length="50" minlength="2" maxlength="50" required><%= name%></textarea>
+                  <label for="textarea1">Your Name</label>
+                </div>
+                <div>
+                  <textarea id="textarea2" class="materialize-textarea" name="wallet" length="300" minlength="20" maxlength="300" required><%= wallet%></textarea>
+                  <label for="textarea2">Wallet Address</label>
+                </div>
+                <div align="center">
+                  <button class="waves-effect waves-light btn-small">Update Name/Wallet</button>
+                </div>
+                <br>
               </form>
         </div>
     <% if(currentUser){ %>
@@ -26,9 +31,9 @@
                 </form> <br><br />
                 <form action="/user/<%=uname%>/profile/?_method=DELETE" method="POST" class="delete-form">
                     <button class="waves-effect waves-light btn-small red">Danger: Delete Profile</button>
-                </form> 
+                </form>
             </div>
-        </div> 
+        </div>
     <% } %>
     </div>
 </div>

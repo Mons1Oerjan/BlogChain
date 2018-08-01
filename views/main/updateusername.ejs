@@ -1,19 +1,21 @@
 <% include ../partials/header %>
-  
-<div class="row">
-    <h1 class="col s6 offset-s4">Change your Username</h1>
-    <form class="col s6 offset-s4" action="/user/<%=currentUser.username%>/updateusername/?_method=PUT" method="POST" enctype="multitype/form-data">
-        <div class="input-field col s6">
-            <input id="new_username" type="text" class="validate" name="new_username" placeholder="Please enter your new username here...">
+
+<div class="row" style="margin-bottom:100px;">
+  <div align="center">
+    <h1 >Change your Username</h1>
+    <form align="center" style="width:30%; min-width:200px;" action="/user/<%=currentUser.username%>/updateusername/?_method=PUT" method="POST" enctype="multitype/form-data">
+        <div>
+            <input id="new_username" type="text" class="validate materialize-textarea" lenght="20" name="new_username" maxlength="20" minlength="2" placeholder="Please enter your new username here..." required>
             <label for="new_userName">New Username</label>
         </div>
-        <div class="input-field col s3">
+        <br>
+        <div>
             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i class="material-icons right">send</i>
             </button>
         </div>
     </form>
+  </div>
 </div>
 
 <% include ../partials/footer %>
-
