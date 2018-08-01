@@ -7,15 +7,15 @@ var summaryURL = "https://api.cryptowat.ch/markets/{exchange}/{pair}/summary";
  */
 var getExchangePairList = function() {
     return [
-        ['btcusd', 'gdax', 'https://pro.coinbase.com/'],
-        ['btcusd', 'gemini', 'https://gemini.com/'],
-        ['btcusd', 'bitbay', 'https://bitbay.net/en/home'],
-        ['ethusd', 'gdax', 'https://pro.coinbase.com/'],
-        ['ethusd', 'gemini', 'https://gemini.com/'],
-        ['ethusd', 'bitbay', 'https://bitbay.net/en/home'],
-        ['ltcusd', 'gdax', 'https://pro.coinbase.com/'],
-        ['ltcusd', 'bitfinex', 'https://www.bitfinex.com/'],
-        ['ltcusd', 'bitbay', 'https://bitbay.net/en/home']
+        ['btcusd', 'gdax', 'https://pro.coinbase.com/', "http://icons.iconarchive.com/icons/froyoshark/enkel/256/Bitcoin-icon.png", "https://developers.coinbase.com/images/coinbase.png"],
+        ['btcusd', 'gemini', 'https://gemini.com/', "http://icons.iconarchive.com/icons/froyoshark/enkel/256/Bitcoin-icon.png", "https://s2.coinmarketcap.com/static/img/exchanges/32x32/151.png"],
+        ['btcusd', 'bitbay', 'https://bitbay.net/en/home', "http://icons.iconarchive.com/icons/froyoshark/enkel/256/Bitcoin-icon.png", "https://s2.coinmarketcap.com/static/img/exchanges/32x32/82.png"],
+        ['ethusd', 'gdax', 'https://pro.coinbase.com/', "https://s2.coinmarketcap.com/static/img/coins/200x200/1027.png", "https://developers.coinbase.com/images/coinbase.png"],
+        ['ethusd', 'gemini', 'https://gemini.com/', "https://s2.coinmarketcap.com/static/img/coins/200x200/1027.png", "https://s2.coinmarketcap.com/static/img/exchanges/32x32/151.png"],
+        ['ethusd', 'bitbay', 'https://bitbay.net/en/home', "https://s2.coinmarketcap.com/static/img/coins/200x200/1027.png", "https://s2.coinmarketcap.com/static/img/exchanges/32x32/82.png"],
+        ['ltcusd', 'gdax', 'https://pro.coinbase.com/', "https://i.redditmedia.com/GTiGM0IrtqlXp5U7jCyaG4cI3RiRx3GfCR6oVNLT8jk.jpg?w=320&s=45820609d95d70ae4bf16cdcb527d6d6", "https://developers.coinbase.com/images/coinbase.png"],
+        ['ltcusd', 'bitfinex', 'https://www.bitfinex.com/', "https://i.redditmedia.com/GTiGM0IrtqlXp5U7jCyaG4cI3RiRx3GfCR6oVNLT8jk.jpg?w=320&s=45820609d95d70ae4bf16cdcb527d6d6", "https://s2.coinmarketcap.com/static/img/exchanges/16x16/37.png"],
+        ['ltcusd', 'bitbay', 'https://bitbay.net/en/home', "https://i.redditmedia.com/GTiGM0IrtqlXp5U7jCyaG4cI3RiRx3GfCR6oVNLT8jk.jpg?w=320&s=45820609d95d70ae4bf16cdcb527d6d6", "https://s2.coinmarketcap.com/static/img/exchanges/32x32/82.png"]
     ];
 };
 
@@ -60,6 +60,8 @@ var getAllPrices = function(exchangePairList, callback) {
         var pair = exchangePair[0];
         var exchange = exchangePair[1];
         var exchangeUrl = exchangePair[2];
+        var imageURL = exchangePair[3];
+        var exchangeImage = exchangePair[4];
 
         var route = summaryURL.replace('{exchange}', exchange).replace('{pair}', pair);
 
@@ -98,7 +100,9 @@ var getAllPrices = function(exchangePairList, callback) {
                 var summary = {
                     exchange: exchange,
                     pair: pair,
+                    image: imageURL,
                     url: exchangeUrl,
+                    exchangeImage: exchangeImage,
                     last: parseFloat(jsonBody.result.price.last),
                     highest: parseFloat(jsonBody.result.price.high),
                     lowest: parseFloat(jsonBody.result.price.low),
@@ -131,7 +135,7 @@ var getAllPrices = function(exchangePairList, callback) {
                   orderedPrices.push(temp);
                 };
                 //console.log(orderedPrices);
-                return callback(orderedPrices);
+                return callback(allPrices);
             }
         }, function(err) {
             console.log(err);
