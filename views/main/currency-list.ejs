@@ -1,37 +1,25 @@
-<!--
-	Note to self: Eventually I'll need to figure out a way to add an
-	arbitrary amount of containers to the view. This is probably easy to
-	do; it just involves front-end stuff I don't understand.
-
-	Theory: Load an empty view and populate it with dynamic divs elsewhere.
-	This file will probably end up being pretty small (header and a container
-	for the coin list)
--->
-
-<div class="container" >
+<div class="container">
 	<h1 align="center">Currencies</h1>
-</div>
-<div>
-		<div class="row" style="margin-bottom:100px;margin-left:150px;">
-				<% prices.forEach(function(price){ %>
-					<div class="col s6 m4 l4">
-						<div class="card large" style="width: 60%;min-height: 45vw;object-fit: cover;">
-							<div class="card-image" style="opacity:0.95;">
-								<img src = "<%= price.url %>">
-								<spam class="card-title" style="color:black"> <%= price.pair.toUpperCase() %> </spam>
-							</div>
-							<div class="card-content" style="overflow: visible">
-								<% price.exchanges.forEach(function(exchange){ %>
-									<a href = "<%=exchange.url%>"> <%=exchange.exchange%></a>
-									<p> Last Price: <%= exchange.last %> </p>
-									<p> Highest Price: <%= exchange.highest %> </p>
-									<p> Lowest Price: <%= exchange.lowest %> </p>
-									<p> Volume Left: <%= exchange.volume %> </p>
-									<hr>
-									<% }); %>
-						 	</div>
-						</div>
+	<div class="row" style="margin-bottom:100px;margin-left:150px;">
+		<% prices.forEach(function(price){ %>
+			<div class="col s6 m4 l4">
+				<div class="card large" style="width: 60%;min-height: 45vw;object-fit: cover;">
+					<div class="card-image" style="opacity:0.95;">
+						<img src="<%= price.url %>">
+						<span class="card-title" style="color:black"> <%= price.pair.toUpperCase() %> </span>
 					</div>
-				<% }); %>
+					<div class="card-content" style="overflow: visible">
+						<% price.exchanges.forEach(function(exchange){ %>
+							<a href="<%=exchange.url%>"><%=exchange.exchange%></a>
+							<p> Last Price: <%= exchange.last %> </p>
+							<p> Highest Price: <%= exchange.highest %> </p>
+							<p> Lowest Price: <%= exchange.lowest %> </p>
+							<p> Volume Left: <%= exchange.volume %> </p>
+							<hr>
+						<% }); %>
+				 	</div>
+				</div>
 			</div>
-		</div>
+		<% }); %>
+	</div>
+</div>
