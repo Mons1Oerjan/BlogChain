@@ -1,5 +1,5 @@
-<!-- 
-	Note to self: Eventually I'll need to figure out a way to add an 
+<!--
+	Note to self: Eventually I'll need to figure out a way to add an
 	arbitrary amount of containers to the view. This is probably easy to
 	do; it just involves front-end stuff I don't understand.
 
@@ -8,22 +8,38 @@
 	for the coin list)
 -->
 
-<div class="container">
-	<h1>Currencies</h1>
+<div class="container" >
+	<h1 align="center">Currencies</h1>
 	<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
         <i class="material-icons left">trending_up</i>
         Refresh Prices
-    </a>
-    
-    <% prices.forEach(function(price){ %>
-    	<%= price.pair %>
-        <%= price.exchange %>
-        <%= price.last %>
-        <%= price.highest %>
-        <%= price.lowest %>
-        <%= price.volume %>
-    <% }); %>
+  </a>
+	<a href="#" class="waves-effect waves-light btn" onclick="location.reload();">
+				<i class="material-icons left">trending_up</i>
+				Refresh Prices
+	</a>
 </div>
-
-
-	
+<div>
+		<div class="row" style="margin-bottom:100px;">
+				<% prices.forEach(function(price){ %>
+					<div class="col s12 m6 l4">
+						<div class="card large">
+							<div class="card-image">
+								<img src = "<%= price.url %>">
+								<spam class="card-title" style="color:black"> <%= price.pair %> </spam>
+							</div>
+							<div class="card-content" style="overflow: auto">
+								<% price.exchanges.forEach(function(exchange){ %>
+									<a href = "<%=exchange.url%>"> <%=exchange.exchange%></a>
+									<p> Last: <%= exchange.last %> </p>
+									<p> Highest: <%= exchange.highest %> </p>
+									<p> Lowest: <%= exchange.lowest %> </p>
+									<p> Volume: <%= exchange.volume %> </p>
+									<hr>
+									<% }); %>
+						 	</div>
+						</div>
+					</div>
+				<% }); %>
+			</div>
+		</div>
