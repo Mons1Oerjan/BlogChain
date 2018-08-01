@@ -1,65 +1,79 @@
-<div class="container">
-	<div class="container" align="center">
-      <h1 class = "center-align" style="color: black;"> Currencies</h1>
-      <br>
-  </div>
-  <div class="row" style="margin-bottom:100px;">
-      <% var i = 0 %>
-			<% prices.forEach(function(price){ %>
-			<% if (i % 3 === 0) { %>
-			<div class="col s12 m6 l4">
-					<div class="card large">
-							<h2 class="header"> <%=price.pair%> </h2>
-	            <div class="image">
-	                <img src= "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png">
-	            </div>
-
-							<% } %>
-							<div class="col l3" style="column-fill:auto;">
-									<ul>
-											<li>
-													<div>
-															<b>Exchange</b>
-															<br>
-															<%= price.exchange %>
-													</div>
-											</li>
-											<li>
-													<div>
-															<b>Last Sell Price</b>
-															<br>
-															<%= price.last %>
-													</div>
-											</li>
-											<li>
-													<div>
-															<b>Lowest Sell Price</b>
-															<br>
-															<%= price.lowest %>
-													</div>
-											</li>
-											<li>
-													<div>
-															<b>Highest Sell Price</b>
-															<br>
-															<%= price.highest %>
-													</div>
-											</li>
-											<li>
-													<div>
-															<b>Volume Left</b>
-															<br>
-															<%= price.volume %>
-													</div>
-											</li>
-									</ul>
-							</div>
-					<% ++i %>
-		      <% }); %>
-		  </div>
-	</div>
-	<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
-        <i class="material-icons left">trending_up</i>
-        Refresh Prices
-  </a>
+<div class="container" align="center">
+	  <h1 class = "center-align" style="color: black;"> CURRENCIES</h1>
+	  <br>
+</div>
+<div class="row" style="margin-bottom:100px;">
+    <div class="col s12">
+        <div class="card medium horizontal">
+            <div class="card-image">
+                <img src= "http://icons.iconarchive.com/icons/froyoshark/enkel/256/Bitcoin-icon.png">
+                <span class="card-title" style="color:black;"><%= prices[0].pair %></span>
+            </div>
+						<span class="card-tabs">
+								<ul class="tabs tabs-fixed-width">
+										<li class="tab"><a href="#test1"> <%= prices[0].exchange %> </a></li>
+										<li class="tab"><a class="active" href="#test2"> <%= prices[1].exchange %> </a></li>
+										<li class="tab"><a href="#test3"> <%= prices[2].exchange %> </a></li>
+								</ul>
+						</span>
+        </div>
+    </div>
+		<div class="col s12">
+        <div class="card medium horizontal">
+            <div class="card-image">
+                <img src= "https://s2.coinmarketcap.com/static/img/coins/200x200/1027.png">
+                <span class="card-title" style="color:black;"><%= prices[3].pair %></span>
+            </div>
+						<div class="card-tabs">
+								<ul class="tabs tabs-fixed-width">
+										<li class="tab"><a href="#test4"><%= prices[3].exchange %></a></li>
+										<li class="tab"><a class="active" href="#test5"><%= prices[4].exchange %></a></li>
+										<li class="tab"><a href="#test6"><%= prices[5].exchange %></a></li>
+								</ul>
+						</div>
+        </div>
+    </div>
+		<div class="col s12">
+        <div class="card medium horizontal">
+            <div class="card-image">
+                <img src= "https://i.redditmedia.com/GTiGM0IrtqlXp5U7jCyaG4cI3RiRx3GfCR6oVNLT8jk.jpg?w=320&s=45820609d95d70ae4bf16cdcb527d6d6">
+                <span class="card-title" style="color:black;"><%= prices[6].pair %></span>
+            </div>
+						<div>
+								<div class="col s12">
+										<b><%= prices[6].exchange %></b>
+										<br>
+										Last Price: <%= prices[6].last %>
+										<br>
+										Lowest Price: <%= prices[6].lowest %>
+										<br>
+										Highest Price: <%= prices[6].highest %>
+										<br>
+										Volume Left: <%= prices[6].volume %>
+								</div>
+								<div class="col s12">
+										<b><%= prices[7].exchange %></b>
+										<br>
+										Last Price: <%= prices[7].last %>
+										<br>
+										Lowest Price: <%= prices[7].lowest %>
+										<br>
+										Highest Price: <%= prices[7].highest %>
+										<br>
+										Volume Left: <%= prices[7].volume %>
+								</div>
+								<div class="col s12">
+										<b><%= prices[8].exchange %></b>
+										<br>
+										Last Price: <%= prices[8].last %>
+										<br>
+										Lowest Price: <%= prices[8].lowest %>
+										<br>
+										Highest Price: <%= prices[8].highest %>
+										<br>
+										Volume Left: <%= prices[8].volume %>
+								</div>
+						</div>
+        </div>
+    </div>
 </div>
