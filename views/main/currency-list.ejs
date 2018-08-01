@@ -1,79 +1,41 @@
-<div class="container" align="center">
-	  <h1 class = "center-align" style="color: black;"> CURRENCIES</h1>
-	  <br>
+<!--
+	Note to self: Eventually I'll need to figure out a way to add an
+	arbitrary amount of containers to the view. This is probably easy to
+	do; it just involves front-end stuff I don't understand.
+
+	Theory: Load an empty view and populate it with dynamic divs elsewhere.
+	This file will probably end up being pretty small (header and a container
+	for the coin list)
+-->
+
+<div class="container" >
+	<h1 align="center">Currencies</h1>
+	<a href="#" class="waves-effect waves-light btn" onclick="document.refreshPrices.submit();">
+        <i class="material-icons left">trending_up</i>
+        Refresh Prices
+  </a>
 </div>
-<div class="row" style="margin-bottom:100px;">
-    <div class="col s12">
-        <div class="card medium horizontal">
-            <div class="card-image">
-                <img src= "http://icons.iconarchive.com/icons/froyoshark/enkel/256/Bitcoin-icon.png">
-                <span class="card-title" style="color:black;"><%= prices[0].pair %></span>
-            </div>
-						<span class="card-tabs">
-								<ul class="tabs tabs-fixed-width">
-										<li class="tab"><a href="#test1"> <%= prices[0].exchange %> </a></li>
-										<li class="tab"><a class="active" href="#test2"> <%= prices[1].exchange %> </a></li>
-										<li class="tab"><a href="#test3"> <%= prices[2].exchange %> </a></li>
-								</ul>
-						</span>
-        </div>
-    </div>
-		<div class="col s12">
-        <div class="card medium horizontal">
-            <div class="card-image">
-                <img src= "https://s2.coinmarketcap.com/static/img/coins/200x200/1027.png">
-                <span class="card-title" style="color:black;"><%= prices[3].pair %></span>
-            </div>
-						<div class="card-tabs">
-								<ul class="tabs tabs-fixed-width">
-										<li class="tab"><a href="#test4"><%= prices[3].exchange %></a></li>
-										<li class="tab"><a class="active" href="#test5"><%= prices[4].exchange %></a></li>
-										<li class="tab"><a href="#test6"><%= prices[5].exchange %></a></li>
-								</ul>
+<div>
+		<div class="row" style="margin-bottom:100px;">
+				<% prices.forEach(function(price){ %>
+					<div class="col s12 m6 l4">
+						<div class="card large" style="width: 100%;height: 55vw;object-fit: cover;">
+							<div class="card-image">
+								<img src = "<%= price.url %>">
+								<spam class="card-title" style="color:black"> <%= price.pair %> </spam>
+							</div>
+							<div class="card-content" style="overflow: auto">
+								<% price.exchanges.forEach(function(exchange){ %>
+									<a href = "<%=exchange.url%>"> <%=exchange.exchange%></a>
+									<p> Last: <%= exchange.last %> </p>
+									<p> Highest: <%= exchange.highest %> </p>
+									<p> Lowest: <%= exchange.lowest %> </p>
+									<p> Volume: <%= exchange.volume %> </p>
+									<hr>
+									<% }); %>
+						 	</div>
 						</div>
-        </div>
-    </div>
-		<div class="col s12">
-        <div class="card medium horizontal">
-            <div class="card-image">
-                <img src= "https://i.redditmedia.com/GTiGM0IrtqlXp5U7jCyaG4cI3RiRx3GfCR6oVNLT8jk.jpg?w=320&s=45820609d95d70ae4bf16cdcb527d6d6">
-                <span class="card-title" style="color:black;"><%= prices[6].pair %></span>
-            </div>
-						<div>
-								<div class="col s12">
-										<b><%= prices[6].exchange %></b>
-										<br>
-										Last Price: <%= prices[6].last %>
-										<br>
-										Lowest Price: <%= prices[6].lowest %>
-										<br>
-										Highest Price: <%= prices[6].highest %>
-										<br>
-										Volume Left: <%= prices[6].volume %>
-								</div>
-								<div class="col s12">
-										<b><%= prices[7].exchange %></b>
-										<br>
-										Last Price: <%= prices[7].last %>
-										<br>
-										Lowest Price: <%= prices[7].lowest %>
-										<br>
-										Highest Price: <%= prices[7].highest %>
-										<br>
-										Volume Left: <%= prices[7].volume %>
-								</div>
-								<div class="col s12">
-										<b><%= prices[8].exchange %></b>
-										<br>
-										Last Price: <%= prices[8].last %>
-										<br>
-										Lowest Price: <%= prices[8].lowest %>
-										<br>
-										Highest Price: <%= prices[8].highest %>
-										<br>
-										Volume Left: <%= prices[8].volume %>
-								</div>
-						</div>
-        </div>
-    </div>
-</div>
+					</div>
+				<% }); %>
+			</div>
+		</div>
