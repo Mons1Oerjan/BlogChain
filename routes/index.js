@@ -110,7 +110,7 @@ router.get("/dashboard", function(req, res) {
 
 router.get("/dashboard/arbitrage", isUserLoggedIn,function(req, res) {
     Arbitrage.find({})
-        .sort({createdAt: -1})
+        .sort({dollarReturn: -1})
         .limit(1500)
         .exec(function(err, allArbitrages) {
             if(err) {
