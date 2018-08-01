@@ -22,12 +22,12 @@ env_variables:
 
 # Confirms that the VM and Docker containers are running.
 # Instances that are deemed unhealthy are restarted.
-# liveness_check:
-#   path: "/liveness_check"
-#   check_interval_sec: 30
-#   timeout_sec: 4
-#   failure_threshold: 2
-#   success_threshold: 2
+liveness_check:
+    path: "/liveness_check"
+    check_interval_sec: 30
+    timeout_sec: 4
+    failure_threshold: 2
+    success_threshold: 2
 
 # Confirms that the instances can accept incoming requests
 # readiness_check:
