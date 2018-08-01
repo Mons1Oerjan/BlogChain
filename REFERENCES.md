@@ -5,3 +5,9 @@ https://stackoverflow.com/questions/4209090/protect-text-box-value-from-input-ht
 
 https://stackoverflow.com/questions/9436534/ajax-tutorial-for-post-and-get
 	Ajax call
+
+https://materializecss.com/cards.html
+	Card documentation
+
+https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
+	Custom sort function
