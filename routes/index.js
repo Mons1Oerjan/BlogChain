@@ -12,7 +12,8 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var request = require('request');
-
+var middleware = require("../middleware/index");
+var { isUserLoggedIn, checkAuthorBlog, checkAuthorComment } = middleware;
 
 var User = require("../models/user");
 var Arbitrage = require('../models/arbitrages');
@@ -107,7 +108,7 @@ router.get("/dashboard", function(req, res) {
     });
 });
 
-router.get("/dashboard/arbitrage", function(req, res) {
+router.get("/dashboard/arbitrage", isUserLoggedIn,function(req, res) {
     Arbitrage.find({})
         .sort({createdAt: -1})
         .limit(1500)
