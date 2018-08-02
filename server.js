@@ -32,8 +32,6 @@ var blogsRouting = require("./routes/blogs");
 var indexRouting = require("./routes/index");
 var profileRouting = require("./routes/profile");
 
-
-
 /**
  * Methods
  */
@@ -42,21 +40,25 @@ var arbitrageCrawler = require('./methods/arbitrageCrawler');
 /**
  * DB Connection
  */
- mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
- const options = {
-   useNewUrlParser: true,
-   autoIndex: false, // Don't build indexes
-   reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-   reconnectInterval: 500, // Reconnect every 500ms
-   poolSize: 10, // Maintain up to 10 socket connections
-   // If not connected, return errors immediately rather than waiting for reconnect
-   bufferMaxEntries: 0,
-   connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
- }
- var dbConnectionString = 'mongodb://test:cloudtest1@ds163630.mlab.com:63630/cloud_a2';
- mongoose.connect(dbConnectionString, options).then(() => console.log(`Database connected`))
-       .catch(err => console.log(`Database connection error: ${err.message}`));
+var options = {
+    useNewUrlParser: true,
+    autoIndex: false, // Don't build indexes
+    reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+    reconnectInterval: 500, // Reconnect every 500ms
+    poolSize: 10, // Maintain up to 10 socket connections
+    // If not connected, return errors immediately rather than waiting for reconnect
+    bufferMaxEntries: 0,
+    connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
+};
+
+var dbConnectionString = process.env.ENVIRONMENT === 'production'
+    ? 'mongodb://blogchain:Blogchain123@cluster0-shard-00-00-u4few.gcp.mongodb.net:27017,cluster0-shard-00-01-u4few.gcp.mongodb.net:27017,cluster0-shard-00-02-u4few.gcp.mongodb.net:27017/blogchaindb?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true'
+    : 'mongodb://test:cloudtest1@ds163630.mlab.com:63630/cloud_a2';
+mongoose.connect(dbConnectionString, options)
+    .then(() => console.log(`Database connected`))
+    .catch(err => console.log(`Database connection error: ${err.message}`));
 
 /**
  * SSL Configs
@@ -64,19 +66,19 @@ var arbitrageCrawler = require('./methods/arbitrageCrawler');
 var httpsOptions = {
     key: sslConfigs.privateKey,
     cert: sslConfigs.certificate
- };
+};
 
- /**
-  * Create HTTP Server
-  */
- var httpServer = http.createServer(app);
+/**
+ * Create HTTP Server
+ */
+var httpServer = http.createServer(app);
 
- /**
-  * Create HTTPS Server
-  */
- var httpsServer = https.createServer(httpsOptions, app);
+/**
+ * Create HTTPS Server
+ */
+var httpsServer = https.createServer(httpsOptions, app);
 
- var everyHour = 60 * 60 * 1000;
+var everyHour = 60 * 60 * 1000;
 
 /**
  * App Configurations
@@ -131,28 +133,19 @@ app.use("/blogs/:id/comments", commentsRouting);
 app.use("/user", profileRouting);
 
 var runServer = function(env) {
-    // if (env && env === 'production') {
-    //     /**
-    //      * Start the production server
-    //      */
-    //     app.listen(process.env.PORT, process.env.IP, function() {
-    //        console.log("The Server Has Started!");
-    //     });
-    // } else {
-        /**
-         * Start the HTTP server
-         */
-        httpServer.listen(8080, function() {
-            console.log('HTTP Server started at http://localhost:8080');
+    /**
+     * Start the HTTP server
+     */
+    httpServer.listen(8080, function() {
+        console.log('HTTP Server started at http://localhost:8080');
 
-            /**
-             * Start the HTTPS Server
-             */
-            httpsServer.listen(8081, function() {
-                console.log('HTTPS Server started at https://localhost:8081');
-            });
+        /**
+         * Start the HTTPS Server
+         */
+        httpsServer.listen(8081, function() {
+            console.log('HTTPS Server started at https://localhost:8081');
         });
-    // }
+    });
 };
 
 runServer(process.env.ENVIRONMENT);

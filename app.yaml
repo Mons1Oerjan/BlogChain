@@ -2,17 +2,13 @@
 runtime: nodejs
 env: flex
 
-# specify networking configs
-# network:
-#     name: blogchain
-
-# defines computing resources
+# Defines computing resources
 resources:
     cpu: 1
     memory_gb: 6
     disk_size_gb: 10
 
-# enables auto-scaling
+# Enables auto-scaling
 automatic_scaling:
     min_num_instances: 1
     max_num_instances: 10
@@ -20,12 +16,24 @@ automatic_scaling:
     cpu_utilization:
         target_utilization: 0.7
 
-# specifies health-checks
-# featureSettings:
-#     splitHealthChecks: true
-
-# define production environment variables
+# Defines environment variables on GCP
 env_variables:
     ENVIRONMENT: production
-    # PORT: 8888,
-    # IP:
+
+# Confirms that the VM and Docker containers are running.
+# Instances that are deemed unhealthy are restarted.
+liveness_check:
+    path: "/liveness_check"
+    check_interval_sec: 30
+    timeout_sec: 4
+    failure_threshold: 2
+    success_threshold: 2
+
+# Confirms that the instances can accept incoming requests
+# readiness_check:
+#   path: "/readiness_check"
+#   check_interval_sec: 5
+#   timeout_sec: 4
+#   failure_threshold: 2
+#   success_threshold: 2
+#   app_start_timeout_sec: 300

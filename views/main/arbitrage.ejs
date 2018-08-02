@@ -9,7 +9,8 @@
         <thead>
           <tr>
               <th>Pair</th>
-              <th>Arbitrage</th>
+              <th>Unit Return</th>
+              <th>Return ($)</th>
               <th>Spread</th>
               <th>Spread %</th>
               <th>Bid Exchange</th>
@@ -25,7 +26,8 @@
             <% arbitrages.forEach(function(arbitrage){ %>
                 <tr>
                     <td><%= arbitrage.pair %></td>
-                    <td><%= arbitrage.arbitrageOpportunity %></td>
+                    <td><%= arbitrage.cryptoReturn %></td>
+                    <td><%= arbitrage.dollarReturn %></td>
                     <td><%= arbitrage.spread %></td>
                     <td><%= arbitrage.spreadPct %></td>
                     <td><%= arbitrage.orderBookBid.exchange %></td>
@@ -38,8 +40,8 @@
                 </tr>
             <% }); %>
         </tbody>
-      </table>
-  </div>
+    </table>
+</div>
 
-<% include ../partials/jquery %>
+<% include ../partials/jquery %> 
 <% include ../partials/footer %>

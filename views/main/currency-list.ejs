@@ -1,0 +1,60 @@
+<div class="container">
+	<h1 align="center">Currencies</h1>
+	<div class="row" style="margin-bottom:100px;">
+	<!-- <div class="col s12">
+		<ul class="tabs">
+			<li class="tab col s3"><a class="active" href="#currencies">Currencies</a></li>
+			<li class="tab col s3"><a href="#exchanges">Exchanges</a></li>
+		</ul>
+	</div>-->
+	<!--<div id="currencies" class="col s12">-->
+	<a href="/dashboard" class="waves-effect waves-light btn">
+			<i class="material-icons left">trending_up</i>
+			Refresh Prices
+	</a>
+	<div align="center">
+		<table id="priceTable" class="row-border" style="margin:0;">
+        <thead>
+          <tr>
+              <th>Currency</th>
+              <th>Exchange</th>
+              <th>Last Price</th>
+              <th>Highest Price</th>
+              <th>Lowest Price</th>
+              <th>Volume</th>
+          </tr>
+        </thead>
+				<tbody>
+            <% prices.forEach(function(price){ %>
+                <tr>
+                    <td>  <img class="iconImage" src="<%= price.image %>"><%= price.pair %></td>
+                    <td>  <img class="iconImage" src="<%= price.exchangeImage %>"> <a href="<%= price.url %>"> <%= price.exchange %></a> </td>
+                    <td><%= price.last %></td>
+                    <td><%= price.highest %></td>
+                    <td><%= price.lowest %></td>
+                    <td><%= price.volume %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+      </table>
+		</div>
+	<!--<div id="exchanges" class="col s12"></div>-->
+</div>
+</div>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+		$('#priceTable').DataTable({
+				"order": [[ 0, "desc" ]],
+				"columnDefs": [
+					{ "width": "2em", "targets": [2, 3, 4, 5] },
+					{ "width": "3em", "targets": [0, 1] },
+				],
+				"pageLength": 10,
+				"scrollX": true,
+				"scrollCollapse": true,
+				"scrollY": "31.25em"
+		});
+});
+	//var instance = M.Tabs.init(el, 300);
+</script>

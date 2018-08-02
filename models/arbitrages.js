@@ -2,7 +2,8 @@ var mongoose = require("mongoose");
 
 var arbitragesSchema = new mongoose.Schema({
     pair: String,
-    arbitrageOpportunity: Number,
+    cryptoReturn: Number,
+    dollarReturn: Number,
     spread: Number,
     spreadPct: Number,
     createdAt: {

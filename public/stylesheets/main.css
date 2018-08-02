@@ -21,6 +21,12 @@ body {
   height: 60px;
   background-color: #424242;
 }
+.iconImage{
+  margin: 0 2px 0 2px;
+  height: 16px;
+  width: 16px;
+}
+
 .footerLabel{
   margin:30px;
 }

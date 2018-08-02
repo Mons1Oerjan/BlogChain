@@ -12,9 +12,12 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var request = require('request');
+var middleware = require("../middleware/index");
+var { isUserLoggedIn, checkAuthorBlog, checkAuthorComment } = middleware;
 
 var User = require("../models/user");
 var Arbitrage = require('../models/arbitrages');
+var cryptoCurrencyCrawler = require('../methods/cryptoCurrencyCrawler');
 
 /**
  * Welcome View
@@ -92,12 +95,22 @@ router.get("/logout", function(req, res) {
  * Dashboard View
  */
 router.get("/dashboard", function(req, res) {
-    res.render("main/blogchainmain");
+    cryptoCurrencyCrawler.getPrices(function(allPrices) {
+        allPrices.sort(function(a, b) { //based off of code by Pramod Vemulapalli at https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
+            a = a.pair;
+            b = b.pair;
+
+            return a < b ? -1 : a > b ? 1 : 0;
+        });
+        res.render("main/blogchainmain", {
+            prices: allPrices
+        });
+    });
 });
 
-router.get("/dashboard/arbitrage", function(req, res) {
+router.get("/dashboard/arbitrage", isUserLoggedIn,function(req, res) {
     Arbitrage.find({})
-        .sort({createdAt: -1})
+        .sort({dollarReturn: -1})
         .limit(1500)
         .exec(function(err, allArbitrages) {
             if(err) {

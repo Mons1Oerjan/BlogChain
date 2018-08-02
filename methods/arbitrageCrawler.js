@@ -91,17 +91,27 @@ var buildArbitrageObject = function(pair, orderBook1, orderBook2) {
         return null;
     }
 
-    var spreadPct = (spread / orderBook1.bidPrice) * 100;
-    var opportunity = spreadPct * Math.min(
+    var spreadPct = spread / orderBook1.bidPrice;
+    var cryptoReturn = spreadPct * Math.min(
+        orderBook1.bidLiquidity,
+        orderBook2.askLiquidity
+    );
+    var dollarReturn = cryptoReturn * Math.min(
         orderBook1.bidLiquidity,
         orderBook2.askLiquidity
     );
 
+    if (dollarReturn < 10) {
+        // the arbitrage is too small to be worth showing.
+        return null;
+    }
+
     return {
         pair: pair,
         spread: Number(spread.toFixed(4)),
-        spreadPct: Number(spreadPct.toFixed(4)),
-        arbitrageOpportunity: Number(opportunity.toFixed(4)),
+        spreadPct: Number((spreadPct * 100).toFixed(2)),
+        cryptoReturn: Number(cryptoReturn.toFixed(2)),
+        dollarReturn: Number(dollarReturn.toFixed(2)),
         orderBookBid: orderBook1,
         orderBookAsk: orderBook2
     };

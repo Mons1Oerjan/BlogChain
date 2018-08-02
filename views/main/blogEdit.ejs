@@ -3,9 +3,9 @@
     <div class="row">
         <h4 class="center">Edit Your Blog Post</h4>
         <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
-            <textarea id="textarea1" class="materialize-textarea" name="blog[name]" minlength="2" maxlength="50" required><%= blog.name %></textarea>
+            <textarea id="textarea1" class="materialize-textarea" name="blog[name]" length="100" minlength="2" maxlength="50" required><%= blog.name %></textarea>
             <label for="textarea1">Title</label>
-            <textarea id="textarea2" class="materialize-textarea" name="blog[content]" minlength="20" maxlength="1000" required><%= blog.content %></textarea>
+            <textarea id="textarea2" class="materialize-textarea" name="blog[content]" length="1000" minlength="20" maxlength="1000" required><%= blog.content %></textarea>
             <label for="textarea2">Content</label>
             <br />
             <button class="btn waves-effect waves-light">Submit</button>

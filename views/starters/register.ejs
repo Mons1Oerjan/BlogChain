@@ -4,21 +4,21 @@
   <br>
   <p>Register an account with BlogChain to gain access to all features.</p>
   <h1>Register</h1>
-  <form  align="center" style="width: 30%;" action="/register" method="post">
+  <form align="center" style="width: 30%;" action="/register" method="post">
     <div class="row">
-      <input id="userName" type="text" class="validate" name="username" placeholder="Please enter your preferred username here...">
+      <input id="userName" type="text" class="validate" name="username" minlength="2" maxlength="50" placeholder="Please enter your preferred username here..." required>
       <label for="userName">Username</label>
     </div>
     <div class="row">
-      <input id="password" type="password" class="validate" name="password" placeholder="Please enter a password...">
+      <input id="password" type="password" class="validate" minlength="6" maxlength="50" name="password" placeholder="Please enter a password..." required>
       <label for="password">Password</label>
     </div>
     <div class="row">
-      <input id="password_confirm" type="password" class="validate" name="password_confirm" placeholder="Please confirm your password...">
+      <input id="password_confirm" type="password" class="validate" minlength="6" maxlength="50" name="password_confirm" placeholder="Please confirm your password..." required>
       <label for="password_confirm">Password Confirmation</label>
     </div>
     <button class="btn waves-effect waves-light" type="submit" name="action">
-        Login <i class="material-icons right">send</i>
+        Register and Login
     </button>
   </form>
 </div>
