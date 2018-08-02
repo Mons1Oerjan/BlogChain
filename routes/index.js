@@ -95,16 +95,27 @@ router.get("/logout", function(req, res) {
  * Dashboard View
  */
 router.get("/dashboard", function(req, res) {
-    cryptoCurrencyCrawler.getPrices(function(allPrices) {
-        allPrices.sort(function(a, b) { //based off of code by Pramod Vemulapalli at https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
-            a = a.pair;
-            b = b.pair;
+    var route = "https://api.cryptowat.ch/";
+    request.get(route, function(error, response, body) {
+        if(response.statusCode && response.statusCode !== 200) {
+            console.log('Summary GET request status code: ' + response.statusCode);
+            res.render("main/errorpage", {
+                error: response.error,
+                status: response.statusCode
+            });
+        } else {
+            cryptoCurrencyCrawler.getPrices(function(allPrices, error) {
+                allPrices.sort(function(a, b) { //based off of code by Pramod Vemulapalli at https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
+                    a = a.pair;
+                    b = b.pair;
 
-            return a < b ? -1 : a > b ? 1 : 0;
-        });
-        res.render("main/blogchainmain", {
-            prices: allPrices
-        });
+                    return a < b ? -1 : a > b ? 1 : 0;
+                });
+                res.render("main/blogchainmain", {
+                    prices: allPrices
+                });
+            });
+        }
     });
 });
 
