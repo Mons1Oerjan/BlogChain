@@ -1,14 +1,20 @@
 <% include ../partials/header %>
-<div class="container">
+<div class="container" style="margin-bottom:100px;" align="center">
     <div class="row">
         <h4 class="center">Edit Your Blog Post</h4>
-        <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
-            <textarea id="textarea1" class="materialize-textarea" name="blog[name]" length="100" minlength="2" maxlength="50" required><%= blog.name %></textarea>
+        <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST" style="min-width:300px">
+          <div>
+            <textarea id="textarea1" class="materialize-textarea" style="width: 50%; min-width:200px" name="blog[name]" length="100" minlength="2" maxlength="50" required><%= blog.name %></textarea>
             <label for="textarea1">Title</label>
+          </div>
+          <div>
             <textarea id="textarea2" class="materialize-textarea" name="blog[content]" length="1000" minlength="20" maxlength="1000" required><%= blog.content %></textarea>
             <label for="textarea2">Content</label>
-            <br />
+          </div>
+          <div align="left">
             <button class="btn waves-effect waves-light">Submit</button>
+            <a class="btn right" href="/blogs">Go Back</a>
+          </div>
         </form>
     </div>
 </div>
