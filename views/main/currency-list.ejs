@@ -26,14 +26,16 @@
         </thead>
 				<tbody>
             <% prices.forEach(function(price){ %>
-                <tr>
-                    <td>  <img class="iconImage" src="<%= price.image %>"><%= price.pair %></td>
-                    <td>  <img class="iconImage" src="<%= price.exchangeImage %>"> <a href="<%= price.url %>"> <%= price.exchange %></a> </td>
-                    <td><%= price.last %></td>
-                    <td><%= price.highest %></td>
-                    <td><%= price.lowest %></td>
-                    <td><%= price.volume %></td>
-                </tr>
+            	<% if(!price.error) { %>
+	                <tr>
+	                    <td>  <img class="iconImage" src="<%= price.image %>"><%= price.pair %></td>
+	                    <td>  <img class="iconImage" src="<%= price.exchangeImage %>"> <a href="<%= price.url %>"> <%= price.exchange %></a> </td>
+	                    <td><%= price.last %></td>
+	                    <td><%= price.highest %></td>
+	                    <td><%= price.lowest %></td>
+	                    <td><%= price.volume %></td>
+	                </tr>
+	            <% } %>
             <% }); %>
         </tbody>
       </table>

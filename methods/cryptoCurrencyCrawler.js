@@ -103,12 +103,11 @@ var getAllPrices = function(exchangePairList, callback) {
                     image: imageURL,
                     url: exchangeUrl,
                     exchangeImage: exchangeImage,
-                    last: parseFloat(jsonBody.result.price.last),
-                    highest: parseFloat(jsonBody.result.price.high),
-                    lowest: parseFloat(jsonBody.result.price.low),
-                    volume: parseFloat(jsonBody.result.volume)
+                    last: (jsonBody.result) ? parseFloat(jsonBody.result.price.last) : -1,
+                    highest: (jsonBody.result) ? parseFloat(jsonBody.result.price.high) : -1,
+                    lowest: (jsonBody.result) ? parseFloat(jsonBody.result.price.low) : -1,
+                    volume: (jsonBody.result) ? parseFloat(jsonBody.result.volume) : -1
                 };
-
                 resolve(summary);
             });
         });

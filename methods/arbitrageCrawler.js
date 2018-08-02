@@ -13,8 +13,7 @@ var writeArbitrageToDatabase = function(arbitrage) {
         if (err) {
             console.log('Error: Could not write arbitrage to DB.');
         } else {
-            console.log('Wrote arbitrage to DB:');
-            console.log(arbitrageCreated);
+            console.log('Wrote arbitrage to DB.');
         }
     });
 };
