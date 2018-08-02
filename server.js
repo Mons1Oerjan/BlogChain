@@ -3,7 +3,7 @@
  */
 var express = require("express");
 var app = express();
-var sanitazer  = require("body-parser");
+var sanitizer  = require("body-parser");
 var mongoose = require("mongoose");
 var authentication  = require("passport");
 var cookieParser = require("cookie-parser");
@@ -83,7 +83,7 @@ var everyHour = 60 * 60 * 1000;
 /**
  * App Configurations
  */
-app.use(sanitazer.urlencoded({extended: true})); // Sanitazes user input
+app.use(sanitizer.urlencoded({extended: true})); // Sanitizes user input
 app.set("view engine", "ejs");                   // Sets the view engine to EJS
 app.use(express.static(__dirname + "/public"));  // Allows access to static files (css or js)
 app.use(methodOverride('_method'));              // Allows RESTful Delete and Put operations
