@@ -47,24 +47,28 @@
     <div id="modal1" class="modal bottom-sheet">
     	<div class="modal-content">
     		<h4>Learn More</h4>
-        <hr>
-        <h6>Pair nomenclature</h6>
-        <p>bitcoin (BTC)</p>
-        <p>litecoin (LTC)</p>
-        <p>etherium (ETH)</p>
-        <p>monero (XMR)</p>
-        <hr>
-    		<p>Pair: The two currencies being compare</p>
-    		<p>Unit Return: The return per unit traded on the pair and exchange of interest</p>
-    		<p>Return ($): The return per dollar traded on the pair and exchange of interest</p>
-    		<p>Spread %: The difference between the buy and sell of the trade</p>
-    		<p>Bid Exchange:  The exchange where the bid price (sell) is hosted</p>
-        <p>Ask Exchange: The exhange where the ask price (buy) is hosted</p>
-        <p>Bid Price The price to sell a unit </p>
-        <p>Ask Price: The price to buy a unit</p>
-        <p>Bid Liquidity: The total amount of contracts on the bid traded during the traded period in the bid exchange</p>
-        <p>Ask Liquidity: The total amount of contracts on the ask traded during the traded period in the ask exchange</p>
-        <p>Date/Time: The date and time of the trade</p>
+            <p>
+                The arbitrage table shows the arbitrage opportunities found on
+                various pairs between cryptocurrency exchanges.
+                The following list contains the table's column descriptions:
+            </p>
+            <p>- <b>Pair:</b> The two currencies being compared, e.g. btcltc = Bitcoin and Litecoin.</p>
+    		<p>- <b>Unit Return:</b> The return (in the given cryptocurrency) you would receive by executing this trade (the spread percentage multiplied by the ask liquidity).</p>
+    		<p>- <b>Return ($):</b> The return (in dollars) you would receive by executing this trade (the unit return multiplied by the ask liquidity)</p>
+            <p>- <b>Spread:</b> The difference between the highest bidPrice and the lowest askPrice.</p>
+    		<p>- <b>Spread %:</b> The ratio of the spread and the bidPrice.</p>
+    		<p>- <b>Bid Exchange:</b> The exchange where the bid price (buy) is hosted.</p>
+            <p>- <b>Ask Exchange:</b> The exhange where the ask price (sell) is hosted.</p>
+            <p>- <b>Bid Price:</b> The highest buy price on the given exchange for the given pair.</p>
+            <p>- <b>Ask Price:</b> The lowest sell price on the given exchange for the given pair.</p>
+            <p>- <b>Bid Liquidity:</b> The total amount of contracts on the bid traded during the traded period in the bid exchange</p>
+            <p>- <b>Ask Liquidity:</b> The total amount of contracts on the ask traded during the traded period in the ask exchange</p>
+            <p>- <b>Date/Time:</b> The date and time of the arbitrage opportunity.</p>
+            <h5>Pair Nomenclature</h5>
+            <p>- <b>BTC:</b> Bitcoin</p>
+            <p>- <b>LTC:</b> Litecoin</p>
+            <p>- <b>ETH:</b> Etherium</p>
+            <p>- <b>XMR:</b> Monero</p>
     	</div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
@@ -72,10 +76,10 @@
     </div>
 </div>
 <script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-  	var elems = document.querySelectorAll('.modal');
-  	var instances = M.Modal.init(elems, 0.5);
-  });
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, 0.5);
+    });
 </script>
 <% include ../partials/jquery %>
 <% include ../partials/footer %>
