@@ -5,6 +5,9 @@
         <i class="material-icons left">trending_up</i>
         Refresh Arbitrages
     </a>
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">
+      <i class="material-icons left">book</i> Learn More
+    </a>
     <table id="arbitrageTable" class="row-border">
         <thead>
           <tr>
@@ -41,7 +44,38 @@
             <% }); %>
         </tbody>
     </table>
+    <div id="modal1" class="modal bottom-sheet">
+    	<div class="modal-content">
+    		<h4>Learn More</h4>
+        <hr>
+        <h6>Pair nomenclature</h6>
+        <p>bitcoin (BTC)</p>
+        <p>litecoin (LTC)</p>
+        <p>etherium (ETH)</p>
+        <p>monero (XMR)</p>
+        <hr>
+    		<p>Pair: The two currencies being compare</p>
+    		<p>Unit Return: The return per unit traded on the pair and exchange of interest</p>
+    		<p>Return ($): The return per dollar traded on the pair and exchange of interest</p>
+    		<p>Spread %: The difference between the buy and sell of the trade</p>
+    		<p>Bid Exchange:  The exchange where the bid price (sell) is hosted</p>
+        <p>Ask Exchange: The exhange where the ask price (buy) is hosted</p>
+        <p>Bid Price The price to sell a unit </p>
+        <p>Ask Price: The price to buy a unit</p>
+        <p>Bid Liquidity: The total amount of contracts on the bid traded during the traded period in the bid exchange</p>
+        <p>Ask Liquidity: The total amount of contracts on the ask traded during the traded period in the ask exchange</p>
+        <p>Date/Time: The date and time of the trade</p>
+    	</div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+      </div>
+    </div>
 </div>
-
-<% include ../partials/jquery %> 
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+  	var elems = document.querySelectorAll('.modal');
+  	var instances = M.Modal.init(elems, 0.5);
+  });
+</script>
+<% include ../partials/jquery %>
 <% include ../partials/footer %>
