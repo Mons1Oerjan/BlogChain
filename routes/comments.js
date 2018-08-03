@@ -41,9 +41,10 @@ router.post("/new", isUserLoggedIn, function(req, res) {
         });
     });
 });
+
 /**
-*Update comment
-*/
+ *Update comment
+ */
 router.put("/:commentId", isUserLoggedIn, checkAuthorComment, function(req, res) {
     var updateComment = {
       $set: {

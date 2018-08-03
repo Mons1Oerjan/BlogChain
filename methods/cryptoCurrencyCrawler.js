@@ -37,12 +37,13 @@ var getPairList = function(){
 };
 
 
-//filters by pair
+// filters by pair
 function filterPair(query){
   return function(element){
     return element.pair.localeCompare(query)===0;
   }
 };
+
 //filters by exchange
 function filterExchange(query){
   return function(element){
@@ -87,14 +88,12 @@ var getAllPrices = function(exchangePairList, callback) {
 
                 var jsonBody = JSON.parse(body);
 
-                if (!jsonBody.result) { //no results returned
-                    reject('Summary contains no results.');
-                } else if (!jsonBody.result.price) { //no prices listed in summary
-                    reject('Summary contains no prices.');
-                } else if (!jsonBody.result.volume) { //no volume for the exchange + pair listed
-                    console.log(route);
-                    console.log(jsonBody.result);
-                    reject('Summary does not indicate a volume.');
+                if (!jsonBody.result) {
+                    reject('The exchange and pair contains no results.');
+                } else if (!jsonBody.result.price) {
+                    reject('The exchange and pair contains no prices.');
+                } else if (!jsonBody.result.volume) {
+                    reject('The exchange and pair does not indicate a volume.');
                 }
 
                 var summary = {
@@ -115,8 +114,8 @@ var getAllPrices = function(exchangePairList, callback) {
 
         requestPromise.then(function(result) {
             allPrices.push(result);
-            if (allPrices.length === 9) {  // hack
-                //create a ordered secondary structure to display automatically
+            if (allPrices.length === exchangePairList.length) {
+                // create an ordered secondary structure to display automatically
                 var pairList = getPairList();
                 for(var i =0; i<pairList.length; i++){
                   var temp = {pair: pairList[i][0], url : pairList[i][1], exchanges: [] };
@@ -134,7 +133,6 @@ var getAllPrices = function(exchangePairList, callback) {
                   };
                   orderedPrices.push(temp);
                 };
-                //console.log(orderedPrices);
                 return callback(allPrices);
             }
         }, function(err) {

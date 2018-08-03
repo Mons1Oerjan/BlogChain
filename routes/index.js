@@ -96,10 +96,11 @@ router.get("/logout", function(req, res) {
  */
 router.get("/dashboard", function(req, res) {
     cryptoCurrencyCrawler.getPrices(function(allPrices) {
-        allPrices.sort(function(a, b) { //based off of code by Pramod Vemulapalli at https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
+        // based off of code by Pramod Vemulapalli.
+        // reference: https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
+        allPrices.sort(function(a, b) {
             a = a.pair;
             b = b.pair;
-
             return a < b ? -1 : a > b ? 1 : 0;
         });
         res.render("main/blogchainmain", {

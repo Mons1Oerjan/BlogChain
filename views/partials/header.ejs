@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="/stylesheets/main.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
       </script>
     </head>
     <body>
@@ -30,22 +30,23 @@
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Sign Up</a></li>
                     <% } else { %>
-                    <li><a href="/user/<%=currentUser.username%>/profile">Signed In As <%= currentUser.username %></a></li>
+                        <li><a href="/user/<%=currentUser.username%>/profile">Signed In As <%= currentUser.username %></a></li>
                         <li><a href="/logout">Logout</a></li>
                     <% } %>
                 </ul>
             </div>
         </nav>
 
-        <!-- MAKES THE MENU COLLAPS... -->
+        <!-- Collapsed side navbar -->
         <ul class="sidenav" id="mobile-demo">
           <li><a href="/blogs">Blogs</a></li>
           <li><a href="/dashboard/arbitrage">Arbitrage</a></li>
           <% if(!currentUser){ %>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Sign Up</a></li>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Sign Up</a></li>
           <% } else { %>
-          <li><a href="/logout">Logout</a></li>
+              <li><a href="/user/<%=currentUser.username%>/profile">Signed In As <%= currentUser.username %></a></li>
+              <li><a href="/logout">Logout</a></li>
           <% } %>
         </ul>
 

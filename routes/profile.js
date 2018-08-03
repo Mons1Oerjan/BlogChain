@@ -18,11 +18,8 @@ var User = require("../models/user");
  * User profile view
  */
 router.get("/:username/profile", isUserLoggedIn, function(req, res) {
-    //console.log("username is " + req.params.username);
-
     var filter = { username: req.params.username };
     User.find(filter, function(err, userFound) {
-        //console.log(userFound);
         if(err){
           console.log("error in username/update: " + err);
           req.flash('error', "Your profile could not be found!");
@@ -31,7 +28,6 @@ router.get("/:username/profile", isUserLoggedIn, function(req, res) {
         var uname = userFound[0].username;
         var name = userFound[0].name;
         var wallet = userFound[0].wallet;
-        //console.log(uname);
         res.render('main/profile', { uname: uname, name: name, wallet: wallet }, function(err,html) {
             if(err){ console.log("get username/profile: " + err); res.sendStatus(500);}
             res.send(html);
@@ -58,8 +54,7 @@ router.put("/:username/updateprof", isUserLoggedIn,function(req, res) {
                     req.flash('error', "Could not update username!");
                     return res.redirect("/dashboard");
                 }
-                req.flash('success', "You username has been updated!");
-                //console.log("user saved: " + u);
+                req.flash('success', "Your username has been updated!");
                 return res.redirect("/dashboard");
             });
      });
@@ -93,9 +88,6 @@ router.get("/:username/updateusername", isUserLoggedIn,function(req, res) {
  * Process Update Username
  */
 router.put("/:username/updateusername", isUserLoggedIn, function(req, res) {
-    //var userToUpdate = { _id: req.user.id };
-    //console.log(req.user._id);
-    //console.log(req.body.new_username);
     User.findById(req.user._id,
         function(err, userFound) {
             if(err){
@@ -111,7 +103,6 @@ router.put("/:username/updateusername", isUserLoggedIn, function(req, res) {
                     req.flash('error', "Could not update username!");
                     return res.redirect("/dashboard");
                 }
-                //console.log("user saved: " + u);
                 req.flash('success', "Your username was updated!");
                 return res.redirect("/dashboard");
             });
