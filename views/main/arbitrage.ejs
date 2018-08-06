@@ -5,6 +5,9 @@
         <i class="material-icons left">trending_up</i>
         Refresh Arbitrages
     </a>
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">
+      <i class="material-icons left">book</i> Learn More
+    </a>
     <table id="arbitrageTable" class="row-border">
         <thead>
           <tr>
@@ -41,7 +44,42 @@
             <% }); %>
         </tbody>
     </table>
+    <div id="modal1" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Learn More</h4>
+            <p>
+                The arbitrage table shows the arbitrage opportunities found on
+                various pairs between cryptocurrency exchanges.
+                The following list contains the table's column descriptions:
+            </p>
+            <p>- <b>Pair:</b> The two currencies being compared, e.g. btcltc = Bitcoin and Litecoin.</p>
+            <p>- <b>Unit Return:</b> The return (in the given cryptocurrency) you would receive by executing this trade (the spread percentage multiplied by the ask liquidity).</p>
+            <p>- <b>Return ($):</b> The return (in dollars) you would receive by executing this trade (the unit return multiplied by the ask liquidity)</p>
+            <p>- <b>Spread:</b> The difference between the highest bidPrice and the lowest askPrice.</p>
+            <p>- <b>Spread %:</b> The ratio of the spread and the bidPrice.</p>
+            <p>- <b>Bid Exchange:</b> The exchange where the bid price (buy) is hosted.</p>
+            <p>- <b>Ask Exchange:</b> The exhange where the ask price (sell) is hosted.</p>
+            <p>- <b>Bid Price:</b> The highest buy price on the given exchange for the given pair.</p>
+            <p>- <b>Ask Price:</b> The lowest sell price on the given exchange for the given pair.</p>
+            <p>- <b>Bid Liquidity:</b> The total amount of contracts on the bid traded during the traded period in the bid exchange</p>
+            <p>- <b>Ask Liquidity:</b> The total amount of contracts on the ask traded during the traded period in the ask exchange</p>
+            <p>- <b>Date/Time:</b> The date and time of the arbitrage opportunity.</p>
+            <h5>Pair Nomenclature</h5>
+            <p>- <b>BTC:</b> Bitcoin</p>
+            <p>- <b>LTC:</b> Litecoin</p>
+            <p>- <b>ETH:</b> Etherium</p>
+            <p>- <b>XMR:</b> Monero</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+        </div>
+    </div>
 </div>
-
-<% include ../partials/jquery %> 
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, 0.5);
+    });
+</script>
+<% include ../partials/jquery %>
 <% include ../partials/footer %>

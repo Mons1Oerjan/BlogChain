@@ -26,7 +26,9 @@ router.get("/", function(req, res) {
     });
 });
 
-// Create New Blog view
+/**
+ * View for creating a new blog
+ */
 router.get("/new", isUserLoggedIn, function(req, res) {
    res.render("main/new");
 });
@@ -66,11 +68,10 @@ router.post("/", isUserLoggedIn, filesMiddleware.single('image'),function(req, r
 
     Blog.create(newBlog, function(err, blogCreated) {
         if (err) {
-            req.flash('error', err.message); // flash message
+            req.flash('error', err.message);
             return res.redirect('blogs/');
         } else {
             if (!req.file) {
-              // needs to update the image...
               req.flash('success', 'Blog Created!');
               res.redirect("/blogs");
             } else {
@@ -98,9 +99,10 @@ router.post("/", isUserLoggedIn, filesMiddleware.single('image'),function(req, r
         }
     });
  });
+
  /**
- *Update Blog => redirects to the view.
- */
+  * Update Blog view
+  */
  router.get("/:id/edit", isUserLoggedIn, checkAuthorBlog, function(req, res){
    Blog.findById(req.params.id, function(err, foundBlog) {
        if (err || !foundBlog) {
@@ -113,28 +115,30 @@ router.post("/", isUserLoggedIn, filesMiddleware.single('image'),function(req, r
        });
    });
  });
+
  /**
- *Update Blog = > Updates the db.
- */
- router.put("/:id", isUserLoggedIn, checkAuthorBlog, function(req, res){
-   var updatedBlog = {
-     $set: {
-       name: req.body.blog.name,
-       content: req.body.blog.content
-     }
-   };
-   Blog.findByIdAndUpdate(req.params.id, updatedBlog, function(err, updated){
-     if(err||!updated){
-       console.log(err);
-       req.flash('error', 'Sorry, that Blog does not exist!');
-       return res.redirect('/blogs');
-     }
-     req.flash('success', 'Your blog has been updated!');
-     return res.redirect("/blogs/" + req.params.id);
-   });
- });
+  * PUT blog by ID (updates the blog in the database)
+  */
+router.put("/:id", isUserLoggedIn, checkAuthorBlog, function(req, res){
+    var updatedBlog = {
+        $set: {
+            name: req.body.blog.name,
+            content: req.body.blog.content
+        }
+    };
+    Blog.findByIdAndUpdate(req.params.id, updatedBlog, function(err, updated){
+        if(err||!updated){
+            console.log(err);
+            req.flash('error', 'Sorry, that Blog does not exist!');
+            return res.redirect('/blogs');
+        }
+        req.flash('success', 'Your blog has been updated!');
+        return res.redirect("/blogs/" + req.params.id);
+    });
+});
+
 /**
- * Delete Blog by ID
+ * Delete Blog by ID (deletes the blog and all associated comments from the database)
  */
 router.delete("/:id", isUserLoggedIn, checkAuthorBlog, function(req, res) {
     var commentsToDelete = {

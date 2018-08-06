@@ -1,24 +1,30 @@
 <% include ../partials/header %>
 
-<div class="container">
+<div class="container" style="margin-bottom:100px;" align="center">
     <h1 class="center">Create a New Blog</h1>
-    <form action="/blogs" method="POST" enctype="multipart/form-data">
-        <textarea id="textarea1" class="materialize-textarea" name="name" length="50" minlength="2" maxlength="50" required></textarea>
+    <form action="/blogs" method="POST" enctype="multipart/form-data" style="min-width:300px">
+      <div>
+        <textarea id="textarea1" class="materialize-textarea" style="width: 50%; min-width:200px" name="name" length="50" minlength="2" maxlength="50" required></textarea>
         <label for="textarea1">Title</label>
+      </div>
+      <div>
         <textarea id="textarea2" class="materialize-textarea" name="description" length="1000" minlength="20" maxlength="1000" required></textarea>
         <label for="textarea2">Content</label>
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>File</span>
-                <input type="file" name="image" accept="image/png, image/jpeg, image/jpg, image/gif">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload your image">
-            </div>
+      </div>
+        <div class="file-field input-field" style="width: 50%; min-width:100px" align="center">
+          <div class="btn">
+              <span>File</span>
+              <input type="file" name="image" accept="image/png, image/jpeg, image/jpg, image/gif">
+          </div>
+          <div class="file-path-wrapper">
+              <input align="center" class="file-path validate" type="text" placeholder="Upload your image">
+          </div>
         </div>
-        <button class="waves-effect waves-light btn">Submit <i class="material-icons right">send</i></button>
+        <div align="left">
+          <button class="waves-effect waves-light btn">Submit <i class="material-icons right">send</i></button>
+          <a class="btn right" href="/blogs">Go Back</a>
+        </div>
     </form>
-    <a class="btn right" href="/blogs">Go Back</a>
 </div>
 
 <% include ../partials/footer %>
