@@ -16,7 +16,7 @@ supports up to 10 instances, and auto-scaling triggers when the CPU utilization 
 Our NoSQL MongoDB is hosted on Google Cloud Platform (using MongoDB Atlas) with 3 clusters. GCP provides us 
 with DB clustering, DB sharding, DB Request Load Balancing, and much more out of the box.
 
-![DB Schema](docs/database/ERD.png)
+![DB Schema](docs/database/ERDiagram/ERD.png)
 
 ## Application Screenshots
 
